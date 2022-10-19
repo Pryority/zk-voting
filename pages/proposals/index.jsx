@@ -66,7 +66,7 @@ export default function Activeproposals() {
 
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
-      <div className="absolute grid md:grid-cols-2 w-full justify-center items-center md:py-24">
+      <div className="absolute grid md:grid-cols-2 w-full justify-center items-center py-24">
         {Events &&
           Events.map((value, i) => {
             let name = ethers.utils.parseBytes32String(value.eventName);
@@ -103,7 +103,7 @@ export default function Activeproposals() {
                 key={i}
               >
                 <div
-                  className='border shadow p-4 w-[400px] rounded-xl h-full'
+                  className='border shadow p-4 w-full rounded-xl h-full'
                 >
                   <header className="">
                     {name}
@@ -111,9 +111,15 @@ export default function Activeproposals() {
                   <p className="text-sm">
                     <span className="tracking-tighter">ID:</span> {id.substring(0, 18)}...
                   </p>
-                  <p className="text-sm">
-                    <span className="text-zinc-600 tracking-tighter">Status:</span> {status}
-                  </p>
+                  <div className="text-sm flex space-x-2 items-center">
+                    <p className={`text-zinc-600 tracking-tighter`}>Status:</p>
+                    <div className={`flex space-x-1 items-center ${status === 'Live' ? 'animate-pulse' : ''}`}>
+                      <p className="font-bold">
+                        {status}
+                      </p>
+                      {status === 'Live' && (<div className="w-2 h-2 rounded-full bg-red-500" />)}
+                    </div>
+                  </div>
                   <div
                     width={"100%"}
                     height={"100px"}
@@ -166,7 +172,7 @@ export default function Activeproposals() {
                       </button>
                     </div>
                   ) : (
-                    <div className="bg-red-300 text-white font-medium border">You are not Admin</div>
+                    <div className="bg-red-300 text-white font-medium border border-red-400/40 rounded-sm px-2 cursor-default">You are not Admin</div>
                   )}
                 </div>
               </div>
