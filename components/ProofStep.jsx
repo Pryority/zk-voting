@@ -225,7 +225,7 @@ export default function ProofStep({
                   </div>
                 </div>
               )}
-              <div className="flex justify-center space-x-16">
+              <div className="flex justify-center space-x-16 w-full">
 
                 {Votes &&
                   Votes.map((val, index) => {
@@ -233,22 +233,27 @@ export default function ProofStep({
                     return (
                       <div
                         key={index}
-                        className='flex justify-center items-center  space-x-4'>
+                        className='grid grid-cols-2 justify-center items-center   w-full'>
                         <div label={val.IndividualGrantee}>
-                          <p className="text-xl" key={index}>
-                            <span className="uppercase p-1 px-3 tracking-tighter font-bold text-sky-800 rounded-xl bg-blue-300 border">You</span> ({val.IndividualGrantee.substring(0, 5) + '...' + val.IndividualGrantee.substring(val.IndividualGrantee, val.IndividualGrantee.length - 5)}):{" "}
+                          <p className="text-lg" key={index}>
+                            <span className="uppercase p-1 px-2 tracking-tighter font-bold text-sky-800 rounded-lg bg-blue-300 border text-sm">You</span> ({val.IndividualGrantee.substring(0, 5) + '...' + val.IndividualGrantee.substring(val.IndividualGrantee, val.IndividualGrantee.length - 5)}):{" "}
                           </p>
                         </div>
-                        <input
-                          className="w-[100px] border rounded p-1"
-                          placeholder={Position[index] ? Position[index] * Position[index] : 0}
-                          type={'number'}
-                          value={Position[index]}
-                          onChange={(e) =>
-                            updatePosition(index, e.target.value)
-                          }
-                        />
+                        {/* VOTE STEPPER */}
+                        <div className="relative w-full justify-center items-center flex">
+                          <input
+                            className="w-[100px] border rounded p-1 absolute"
+                            placeholder={Position[index] ? Position[index] * Position[index] : 0}
+                            type={'number'}
+                            value={Position[index]}
+                            onChange={(e) =>
+                              updatePosition(index, e.target.value)
+                            }
+                          />
+                          {Position <= 0 ? (<p className="absolute text-zinc-800">Votes</p>) : ''}
+                        </div>
                       </div>
+
                     );
                   })}
                 {/* {
@@ -258,7 +263,7 @@ export default function ProofStep({
                 } */}
 
                 {EventData && EventData[0] && EventData[0].time != 0 ? (
-                  <div className="pl-5">
+                  <div className="">
                     {EventData && EventData[0] && EventData[0].time != 0 ? (
                       <p className="text-xl">
                         Start Time: <br />
