@@ -14,7 +14,7 @@ export default function GroupStep({
   const [Events, Setevents] = useState();
   const [NewEventName, SetNewEventName] = useState();
   const [NewEventDescription, SetNewEventDescription] = useState();
-  const [Proposals, SetProposals] = useState([""]);
+  const [EligibleVoters, SetEligibleVoters] = useState([""]);
   const [Coordinator, SetCoordinator] = useState();
   const [Fund, SetFund] = useState(0);
   const [isShowingCreateProposalHelp, setIsShowingCreateProposalHelp] = useState(false);
@@ -24,21 +24,24 @@ export default function GroupStep({
     signer
   );
 
-  const updateProposals = (value, index) => {
-    let proposals = [...Proposals];
-    proposals[index] = value;
-    SetProposals(proposals);
+  const updateEligibleVoters = (value, index) => {
+    let eligibleVoters = [...EligibleVoters];
+    eligibleVoters[index] = value;
+    SetEligibleVoters(eligibleVoters);
   };
 
-  const RemoveProposals = (index) => {
-    let proposals = [...Proposals];
-    proposals.splice(index, 1);
-    SetProposals(proposals);
+  const RemoveVoter = (index) => {
+    let eligibleVoters = [...EligibleVoters];
+    if (eligibleVoters.length <= 1) {
+      return;
+    }
+    eligibleVoters.splice(index, 1);
+    SetEligibleVoters(eligibleVoters);
   };
 
-  const AddProposals = () => {
-    let newproposals = [...Proposals, ""];
-    SetProposals(newproposals);
+  const AddVoters = () => {
+    let newVoters = [...EligibleVoters, ""];
+    SetEligibleVoters(newVoters);
   };
 
   const toggle = () => {
@@ -46,7 +49,7 @@ export default function GroupStep({
   }
 
   const CreateProposal = async () => {
-    // let proposals = [...Proposals];
+    // let proposals = [...EligibleVoters];
 
     // const newproposals = proposals.map((val, index) => {
     //   if (val.length < 32) {
@@ -54,12 +57,12 @@ export default function GroupStep({
     //   }
     //   return val;
     // });
-    // SetProposals(newproposals);
-    console.log("Proposals", Proposals);
+    // SetEligibleVoters(newproposals);
+    console.log("EligibleVoters", EligibleVoters);
     await contract.NewVoteInstance(
       ethers.utils.formatBytes32String(NewEventName),
       NewEventDescription,
-      Proposals,
+      EligibleVoters,
       Coordinator,
       20,
       0, { value: (Fund ? ethers.utils.parseEther(Fund).toString() : 0) }
@@ -67,7 +70,7 @@ export default function GroupStep({
     SetCoordinator("");
     SetNewEventDescription("");
     SetNewEventName("");
-    SetProposals("");
+    SetEligibleVoters("");
     SetFund("");
   };
 
@@ -108,30 +111,30 @@ export default function GroupStep({
             onChange={(e) => SetNewEventDescription(e.target.value)}
           />
           <div className="">
-            {Proposals.map((proposal, index) => (
+            {EligibleVoters.map((voter, index) => (
               <div className="flex items-center justify-between" key={index}>
                 <input
                   placeholder="Enter address"
-                  value={proposal}
-                  onChange={(e) => updateProposals(e.target.value, index)}
-                  className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${proposal ? 'focus:ring-lime-500 border-lime-300/50' : 'focus:pink-500'}  placeholder:text-sm`}
+                  value={voter}
+                  onChange={(e) => updateEligibleVoters(e.target.value, index)}
+                  className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${voter ? 'focus:ring-lime-500 border-lime-300/50' : 'focus:pink-500'}  placeholder:text-sm`}
                 />
                 <div className="flex space-x-2 justify-center p-4">
                   {index >= 0 && (
                     <button
                       className="flex justify-center items-center"
                       onClick={() => {
-                        RemoveProposals(index);
+                        RemoveVoter(index);
                       }}
                     >
                       <DeleteOutlined />
                     </button>
                   )}
-                  {index === Proposals.length - 1 && (
+                  {index === EligibleVoters.length - 1 && (
                     <button
                       className="flex justify-center items-center"
                       onClick={() => {
-                        AddProposals();
+                        AddVoters();
                       }}
                     >
                       <PlusOutlined />
