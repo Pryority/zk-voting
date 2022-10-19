@@ -65,115 +65,114 @@ export default function Activeproposals() {
   }
 
   return (
-    <div
-      display={"flex"}
-      mx={"200px"}
-      my={20}
-      flexWrap={"wrap"}
-      justifyContent={"center"}
-      alignItems={"center"}
-    >
-      {Events &&
-        Events.map((value, i) => {
-          let name = ethers.utils.parseBytes32String(value.eventName);
-          let id = ethers.BigNumber.from(value.groupId).toString();
-          console.log("id", id);
-          let members = value.members;
-          let isMember = false;
-          let des = value.description;
-          let admin = value.coordinator;
-          for (let i = 0; i < members.length; i++) {
-            console.log(
-              "members",
-              members[i],
-              "identity",
-              _identity?.generateCommitment().toString()
-            );
-            if (members[i] == _identity?.generateCommitment().toString()) {
-              isMember = true;
+    <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
+      <div className="absolute grid md:grid-cols-2 w-full justify-center items-center md:py-24">
+        {Events &&
+          Events.map((value, i) => {
+            let name = ethers.utils.parseBytes32String(value.eventName);
+            let id = ethers.BigNumber.from(value.groupId).toString();
+            console.log("id", id);
+            let members = value.members;
+            let isMember = false;
+            let des = value.description;
+            let admin = value.coordinator;
+            for (let i = 0; i < members.length; i++) {
+              console.log(
+                "members",
+                members[i],
+                "identity",
+                _identity?.generateCommitment().toString()
+              );
+              if (members[i] == _identity?.generateCommitment().toString()) {
+                isMember = true;
+              }
             }
-          }
-          let currentstatus = "Created";
+            let currentstatus = "Created";
 
-          let status =
-            value.start.length != 0
-              ? (currentstatus = " Voting Started")
-              : value.end.length != 0
-                ? (currentstatus = "Voting Ended")
-                : (currentstatus = "Created");
-          let a = isMember ? "You are a member" : "Not Member";
+            let status =
+              value.start.length != 0
+                ? (currentstatus = "Live")
+                : value.end.length != 0
+                  ? (currentstatus = "Ended")
+                  : (currentstatus = "Created");
+            let a = isMember ? "You are a member" : "Not Member";
 
-          return (
-            <div
-              key={i}
-              className='border shadow p-4 w-[400px] m-5 rounded-xl'
-            >
-              <header className="mb-5">
-                {name}
-              </header>
-              <p className="mb-3 text-xl">
-                ID: {id.substring(0, 18)}...
-              </p>
-              <p className="mb-3 text-xl">
-                Status: {status}...
-              </p>
+            return (
               <div
-                width={"100%"}
-                height={"100px"}
-                borderRadius={10}
-                padding={3}
-                border={"1px solid rgba(255, 255, 255, 0.125)"}
-                mb={5}
-                overflow={"auto"}
+                className="h-full w-full flex justify-center p-2 text-zinc-900"
+                key={i}
               >
-                {des}
-              </div>
-              <div mb={5} display={"flex"}>
-                <button disabled>{a}</button>
-                <button className="ml-5">
-                  <Link href={"Vote/" + id}>
-                    Open
-                  </Link>
-                </button>
-              </div>
-              {signer && signer._address == admin ? (
-                <div>
-                  <inpput
-                    placeholder="Add voter credentials"
-                    value={NewVoter}
-                    onChange={(e) => SetNewVoter(e.target.value)}
-                    className='mb-5'
-                  />
-                  <button
-                    onClick={async () => {
-                      if (!signer) {
-                        alert("Please connect Wallet");
-                      }
-                      const contractwithsigner = new ethers.Contract(
-                        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-                        abi.abi,
-                        signer
-                      );
-                      let arr = [];
-                      console.log("newVoter", NewVoter);
-                      arr.push(NewVoter);
-                      console.log("arr", arr);
-                      const tx = await contractwithsigner.Addvoter(
-                        id,
-                        arr
-                      );
-                      console.log("tx", tx);
-                    }}
+                <div
+                  className='border shadow p-4 w-[400px] rounded-xl h-full'
+                >
+                  <header className="">
+                    {name}
+                  </header>
+                  <p className="text-sm">
+                    <span className="tracking-tighter">ID:</span> {id.substring(0, 18)}...
+                  </p>
+                  <p className="text-sm">
+                    <span className="text-zinc-600 tracking-tighter">Status:</span> {status}
+                  </p>
+                  <div
+                    width={"100%"}
+                    height={"100px"}
+                    borderRadius={10}
+                    padding={3}
+                    border={"1px solid rgba(255, 255, 255, 0.125)"}
+                    mb={5}
+                    overflow={"auto"}
                   >
-                    Add Members
-                  </button>
+                    {des}
+                  </div>
+                  <div mb={5} display={"flex"}>
+                    <button disabled>{a}</button>
+                    <button className="ml-5">
+                      <Link href={"Vote/" + id}>
+                        Open
+                      </Link>
+                    </button>
+                  </div>
+                  {signer && signer._address == admin ? (
+                    <div>
+                      <inpput
+                        placeholder="Add voter credentials"
+                        value={NewVoter}
+                        onChange={(e) => SetNewVoter(e.target.value)}
+                        className=''
+                      />
+                      <button
+                        onClick={async () => {
+                          if (!signer) {
+                            alert("Please connect Wallet");
+                          }
+                          const contractwithsigner = new ethers.Contract(
+                            process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+                            abi.abi,
+                            signer
+                          );
+                          let arr = [];
+                          console.log("newVoter", NewVoter);
+                          arr.push(NewVoter);
+                          console.log("arr", arr);
+                          const tx = await contractwithsigner.Addvoter(
+                            id,
+                            arr
+                          );
+                          console.log("tx", tx);
+                        }}
+                      >
+                        Add Members
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="bg-red-300 text-white font-medium border">You are not Admin</div>
+                  )}
                 </div>
-              ) : (
-                <div className="bg-red-300 text-white font-medium border">You are not Admin</div>
-              )}
-            </div>
-          );
-        })}
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 }
