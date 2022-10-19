@@ -4,7 +4,7 @@
 
 > 🌐 CREATE IDENTITY - Derived from your externally owned account's public key, you receive: a *Nullifier*, a *Trapdoor*, and a *Commitment*
 
-> 📄 PROVE IDENTITY - Use your Commitment ID to 
+> 📄 PROVE IDENTITY - Use your Commitment ID to vote on on-chain proposals
 
 ### ![Demo Image 1](./assets/images/zkvote-demo-1.png)
 ### ![Demo Image 2](./assets/images/zkvote-demo-2.png)
