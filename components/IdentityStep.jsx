@@ -53,10 +53,10 @@ export default function IdentityStep({ }) {
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
       <div className="absolute flex flex-col w-full justify-center items-center h-screen ">
-        {isOpen ? (<div className="absolute bg-black/60 flex items-center h-screen w-full z-50">
+        {isOpen ? (<div className="absolute bg-black/60 flex items-center h-screen w-full z-50  ">
           <SemaphoreIntro toggle={toggle} />
         </div>) : (<></>)}
-        <div className="p-4 rounded-xl h-fit bg-zinc-50 flex flex-col sm:w-1/2 md:w-2/5 space-y-4 border">
+        <div className="p-4 rounded-xl h-fit bg-zinc-50 flex flex-col sm:w-1/2 md:w-2/5 space-y-4 border shadow">
           <div className="flex justify-between">
             <div className="bg-stone-200/50 rounded-lg justify-center items-center px-2">
               <p className="tracking-tighter font-extrabold uppercase bg-gradient-to-r from-pink-700 via-pink-500 to-yellow-500 bg-clip-text text-transparent">Claim Your Identity</p>
@@ -65,8 +65,8 @@ export default function IdentityStep({ }) {
               className="w-6 h-6 rounded-full ml-2 md:ml-0 bg-zinc-300 relative flex justify-center items-center cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <div className="w-4 h-4 rounded-full bg-white relative flex justify-center items-center object-center">
-                <InformationCircleIcon className="h-6 w-6 absolute object-center text-stone-900" />
+              <div className="w-4 h-4 rounded-full bg-white relative flex justify-center items-center object-center transition ease-in-out duration-200 hover:bg-black">
+                <InformationCircleIcon className="h-6 w-6 absolute object-center text-stone-700 transition ease-in-out duration-200 hover:text-stone-50" />
               </div>
             </div>
           </div>
@@ -78,7 +78,7 @@ export default function IdentityStep({ }) {
           ></input>
           <div className="flex flex-col items-center justify-center w-full space-y-1">
             <button
-              className={`w-full ${SecretString ? 'bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 text-white cursor-pointer' : 'bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 text-white cursor-not-allowed'}`}
+              className={`w-full ${SecretString ? 'bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 transition ease-in-out duration-200 text-white cursor-pointer' : 'bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed'}`}
               disabled={!SecretString}
               onClick={async () => {
                 setLoading(true);
