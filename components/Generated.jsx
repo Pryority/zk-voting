@@ -1,5 +1,6 @@
 import { DocumentDuplicateIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react'
+import copy from "copy-to-clipboard";
 
 export default function Generated({ identity }) {
     const [loading, setLoading] = useState(false);
@@ -10,60 +11,97 @@ export default function Generated({ identity }) {
     const getSetNullifier = () => {
         SetNullifierCopied(true);
         copyToClipboard(identity.getNullifier().toString());
+        SetTrapdoorCopied(false);
+        SetCommitmentCopied(false);
     }
     const getSetTrapdoor = () => {
         copyToClipboard(identity.getTrapdoor().toString());
         SetTrapdoorCopied(true);
+        SetCommitmentCopied(false);
+        SetNullifierCopied(false);
     }
     const getSetCommitment = () => {
         copyToClipboard(identity.generateCommitment().toString());
         SetCommitmentCopied(true);
+        SetTrapdoorCopied(false);
+        SetNullifierCopied(false);
     }
+
+    const copyToClipboard = (text) => {
+        copy(text);
+    };
 
     return (
         <div>
             {identity ? (
-                <div className="border shadow p-4 rounded-xl bg-red-500 h-full">
+                <div className="border shadow p-4 rounded-xl bg-[#fcffff] h-full">
                     <div className="mb-3">
-                        <p className="font-bold">
-                            Nullifier (<b>Don&apos;t share this </b>) : {""}
+                        <p className="font-bold text-base">
+                            Nullifier - Do Not Share ⚠️
                         </p>
-                        {identity ? identity.getNullifier().toString() : ""}{" "}
-                        <div
-                            onClick={getSetNullifier}
-                            className={NullifierCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}
-                            aria-label="Copy Trapdoor"
-                        >
-                            <DocumentDuplicateIcon className='w-8 h-8 text-white' />
+                        <div className='flex items-center w-full justify-center space-x-4'>
+                            <div className='h-32 w-32 tracking-widest leading-[14px] text-[12px] bg-lime-200 justify-center items-center flex relative rounded-lg'>
+                                <div className='h-24 w-24 overflow-clip tracking-[2px] leading-[14px] text-[12px] font-bold justify-center items-center flex'>
+                                    <p className='break-all text-center'>{identity ? identity.getNullifier().toString() : ""}{" "}</p>
+                                </div>
+                            </div>
+                            <div
+                                onClick={getSetNullifier}
+                                className={NullifierCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}
+                                aria-label="Copy Trapdoor"
+                            >
+                                <div className={`relative hover:scale-110 ${NullifierCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
+                                >
+                                    <DocumentDuplicateIcon className='w-16 h-16 text-white' />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div className="mb-3">
-                        <p className="font-bold">
-                            Nullifier (<b>Don&apos;t Share this </b>) :{""}
+                        <p className="font-bold text-base">
+                            Trapdoor - Do Not Share ⚠️
                         </p>
-                        {identity ? identity.getTrapdoor().toString() : ""}{" "}
-                        <div
-                            onClick={getSetTrapdoor}
-                            className={TrapdoorCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}
-                            aria-label="Copy Commitment"
-                        >
-                            <DocumentDuplicateIcon className='w-8 h-8 text-white' />
+                        <div className='flex items-center w-full justify-center space-x-4'>
+                            <div className='h-32 w-32 tracking-widest leading-[14px] text-[12px] bg-lime-200 justify-center items-center flex relative rounded-lg'>
+                                <div className='h-24 w-24 overflow-clip tracking-[2px] leading-[14px] text-[12px] font-bold justify-center items-center flex'>
+                                    <p className='break-all text-center'> {identity ? identity.getTrapdoor().toString() : ""}{" "}</p>
+                                </div>
+                            </div>
+                            <div
+                                onClick={getSetTrapdoor}
+                                className={TrapdoorCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}
+                                aria-label="Copy Commitment"
+                            >
+                                <div className={`relative hover:scale-110 ${TrapdoorCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
+                                >
+                                    <DocumentDuplicateIcon className='w-16 h-16 text-white' />
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div>
-                        <p className="font-bold">
-                            Commitment (This is your Public ID) :{" "}
+                        <p className="font-bold text-base">
+                            Commitment - Your Shareable ID ✅
                         </p>
-                        {identity ? identity.generateCommitment().toString() : " "}
-                        {"  "}
-                        <div
-                            onClick={getSetCommitment}
-                            className={CommitmentCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}
-                            aria-label="Copy Commitment"
-                        >
-                            <DocumentDuplicateIcon className='w-8 h-8 text-white' />
+                        <div className='flex items-center w-full justify-center space-x-4'>
+
+                            <div className='h-32 w-32 tracking-widest leading-[14px] text-[12px] bg-lime-200 justify-center items-center flex relative rounded-lg'>
+                                <div className='h-24 w-24 overflow-clip tracking-[2px] leading-[14px] text-[12px] font-bold justify-center items-center flex'>
+                                    <p className='break-all text-center'> {identity ? identity.generateCommitment().toString() : ""}{" "}</p>
+                                </div>
+                            </div>
+                            <div
+                                onClick={getSetCommitment}
+                                className={CommitmentCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}
+                                aria-label="Copy Commitment"
+                            >
+                                <div className={`relative hover:scale-110 ${CommitmentCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
+                                >
+                                    <DocumentDuplicateIcon className='w-16 h-16 text-white' />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -76,21 +114,6 @@ export default function Generated({ identity }) {
                     )}
                 </div>
             )}
-            {/* {identity ? (
-                <div className='flex flex-col'>
-                    <p className="font-bold">
-                        Commitment (This is your Public ID) :{" "}
-                    </p>
-                    {identity ? identity.generateCommitment().toString() : " "}
-                    {"  "}
-                    <div
-                        onClick={getSetCommitment}
-                        className={`relative ${CommitmentCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}`}
-                    >
-                        <DocumentDuplicateIcon />
-                    </div>
-                </div>
-            ) : 'meh'} */}
         </div>
     )
 };
