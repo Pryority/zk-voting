@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSigner } from "wagmi";
-import abi from "../helpers/ZkVote.json";
-import GroupStep from "../components/GroupStep";
+import abi from "../../helpers/ZkVote.json";
+import GroupStep from "../../components/GroupStep";
 import { Identity } from "@semaphore-protocol/identity";
 const { ethers } = require("ethers");
 
