@@ -20,7 +20,7 @@ export default function SelectId() {
           className="ml-5"
           onClick={() => {
             router.push({
-              pathname: "/Vote/" + Id,
+              pathname: "/vote/" + Id,
               query: { GroupId: Id },
             });
           }}

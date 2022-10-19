@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Identity } from "@semaphore-protocol/identity";
 import { useSigner } from "wagmi";
 const { ethers } = require("ethers");
-import { InformationCircleIcon } from '@heroicons/react/24/solid'
+import { ArrowPathRoundedSquareIcon, InformationCircleIcon } from '@heroicons/react/24/solid'
 import SemaphoreIntro from './SemaphoreIntro'
 import Generated from '../components/Generated'
 
@@ -52,6 +52,9 @@ export default function IdentityStep({ }) {
         <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? 'flex' : 'hidden'}`}>
           <SemaphoreIntro toggle={toggle} />
         </div>
+        {loading && <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? 'flex' : 'hidden'}`}>
+          <ArrowPathRoundedSquareIcon className="h-8 w-8 text-[#fcffff]" />
+        </div>}
         <div className="md:p-8">
           <div className="p-4 rounded-xl bg-zinc-50 flex flex-col justify-center items-center w-full space-y-4 border shadow">
             <div className="flex justify-between w-full">

@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useCallBack, useEffect } from "react";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import abi from "../helpers/ZkVote.json";
-import { InformationCircleIcon } from '@heroicons/react/24/solid'
+import { ArrowPathRoundedSquareIcon, InformationCircleIcon } from '@heroicons/react/24/solid'
 import HelpCreateProposal from './HelpCreateProposal'
 
 const { ethers } = require("ethers");
@@ -11,12 +11,13 @@ export default function GroupStep({
   mainnetprovider,
   signer,
 }) {
+  const [loading, setLoading] = useState(false);
   const [Events, Setevents] = useState();
-  const [NewEventName, SetNewEventName] = useState();
-  const [NewEventDescription, SetNewEventDescription] = useState();
+  const [NewEventName, SetNewEventName] = useState(null);
+  const [NewEventDescription, SetNewEventDescription] = useState(null);
   const [EligibleVoters, SetEligibleVoters] = useState([""]);
-  const [Coordinator, SetCoordinator] = useState();
-  const [Fund, SetFund] = useState(0);
+  const [Coordinator, SetCoordinator] = useState(null);
+  const [Fund, SetFund] = useState(null);
   const [isShowingCreateProposalHelp, setIsShowingCreateProposalHelp] = useState(false);
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
@@ -80,6 +81,9 @@ export default function GroupStep({
         <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isShowingCreateProposalHelp ? 'flex' : 'hidden'}`}>
           <HelpCreateProposal toggle={toggle} />
         </div>
+        {loading && <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isShowingCreateProposalHelp ? 'flex' : 'hidden'}`}>
+          <ArrowPathRoundedSquareIcon className="h-8 w-8 text-[#fcffff]" />
+        </div>}
         <div
           className='backgrop-blur-lg bg-zinc-50 rounded-xl border w-1/2 mx-auto shadow p-4 flex flex-col space-y-4'
         >
@@ -164,7 +168,9 @@ export default function GroupStep({
           <button
             className={`w-full ${NewEventName && NewEventDescription && Fund && EligibleVoters && Coordinator ? 'bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 hover:animate-none transition ease-in-out duration-200 text-white cursor-pointer animate-pulse' : 'bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed'}`}
             onClick={async () => {
+              // setLoading(true);
               await CreateProposal();
+              // setLoading(false);
             }}
           >
             Create Proposal
