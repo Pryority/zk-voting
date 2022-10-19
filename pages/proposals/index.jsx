@@ -1,5 +1,5 @@
 import React from "react";
-import abi from "../helpers/ZkVote.json";
+import abi from "../../helpers/ZkVote.json";
 import { useState, useEffect } from "react";
 import { Identity } from "@semaphore-protocol/identity";
 import Link from "next/link";
