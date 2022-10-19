@@ -6,10 +6,14 @@
 
 > 📄 PROVE IDENTITY - Use your Commitment ID to 
 
-### ![Demo Image 1](./assets/demo-images/web3-yt-demo-1.png)
-### ![Demo Image 1](./assets/demo-images/web3-yt-demo-3.png)
-### ![Demo Image 1](./assets/demo-images/web3-yt-demo-4.png)
-### ![Demo Image 1](./assets/demo-images/web3-yt-demo-2.png)
+### ![Demo Image 1](./assets/images/zkvote-demo-1.png)
+### ![Demo Image 2](./assets/images/zkvote-demo-2.png)
+### ![Demo Image 3](./assets/images/zkvote-demo-3.png)
+### ![Demo Image 4](./assets/images/zkvote-demo-4.png)
+### ![Demo Image 5](./assets/images/zkvote-demo-5.png)
+### ![Demo Image 6](./assets/images/zkvote-demo-6.png)
+### ![Demo Image 7](./assets/images/zkvote-demo-7.png)
+### ![Demo Image 8](./assets/images/zkvote-demo-8.png)
 
 ---
 ## 📦 Clone this dApp
@@ -18,10 +22,11 @@
 git clone https://github.com/pryority/web3-youtube.git
 ```
 
-### To run 
+### 🔁 Run this dApp
 ```
 yarn 
 yarn dev
 ```
 
 ### [Main voting contract](https://github.com/supernovahs/ClickedZKvote-frontend/blob/main/src/Contract.sol)
+### [This Project Was Forked From This Person](https://github.com/supernovahs)
