@@ -162,7 +162,7 @@ export default function GroupStep({
             />
           </div>
           <button
-            className={`w-full ${NewEventName && NewEventDescription && Fund && Proposals && Coordinator ? 'bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 transition ease-in-out duration-200 text-white cursor-pointer' : 'bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed'}`}
+            className={`w-full ${NewEventName && NewEventDescription && Fund && EligibleVoters && Coordinator ? 'bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 hover:animate-none transition ease-in-out duration-200 text-white cursor-pointer animate-pulse' : 'bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed'}`}
             onClick={async () => {
               await CreateProposal();
             }}
