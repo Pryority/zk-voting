@@ -9,15 +9,17 @@ export default function SemaphoreIntro({ toggle }) {
       <div className="flex w-full justify-end text-stone-500 transition ease-in-out duration-200 hover:text-stone-600">
         <XCircleIcon className="h-6 w-6 cursor-pointer" onClick={toggle} />
       </div>
-      <header className="mb-5 font-medium"> How does ZK-VOTE work ?</header >
-      <p>
-        <span className="font-semibold">Semaphore</span> is a <span className="italic">zero-knowledge protocol</span> that allows users to prove their
-        membership in a group and send signals such as votes or endorsements
-        without revealing their identity.
-        <br></br>
-        <br></br>
-        Additionally, it provides a simple
-        mechanism to prevent double-signaling.
+      <header className="mb-5 font-medium"> How does ZK-VOTE work ?</header>
+      <div>
+        <p>
+          <span className="font-semibold">Semaphore</span> is a <span className="italic">zero-knowledge protocol</span> that allows users to prove their
+          membership in a group and send signals such as votes or endorsements
+          without revealing their identity.
+          <br></br>
+          <br></br>
+          Additionally, it provides a simple
+          mechanism to prevent double-signaling.
+        </p>
         <ul>
           <br></br>
           <li className="mb-2 mx-8">- Create or load an identity!</li>
@@ -25,7 +27,7 @@ export default function SemaphoreIntro({ toggle }) {
             - Create a new Vote Proposal or voting on an existing Proposal.
           </li>
         </ul>
-      </p>
-    </div >
+      </div>
+    </div>
   );
 }

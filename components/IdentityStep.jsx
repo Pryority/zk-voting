@@ -1,26 +1,27 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import { Identity } from "@semaphore-protocol/identity";
 import copy from "copy-to-clipboard";
 import { useSigner } from "wagmi";
 const { ethers } = require("ethers");
-import { DocumentDuplicate } from '@heroicons/react/24/outline'
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 import SemaphoreIntro from './SemaphoreIntro'
+import Generated from '../components/Generated'
 
 export default function IdentityStep({ }) {
   const { data: signer, isError, isLoading } = useSigner();
   const [identity, setIdentity] = useState("");
-  const [TrapdoorCopied, SetTrapdoorCopied] = useState(false);
-  const [NullifierCopied, SetNullifierCopied] = useState(false);
-  const [CommitmentCopied, SetCommitmentCopied] = useState(false);
+  // const [TrapdoorCopied, SetTrapdoorCopied] = useState(false);
+  // const [NullifierCopied, SetNullifierCopied] = useState(false);
+  // const [CommitmentCopied, SetCommitmentCopied] = useState(false);
   const [SecretString, SetSecretString] = useState();
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(identity)
+
   async function checkidentity() {
     const identityval = window.localStorage.getItem("identitycommitment");
     console.log("identityval", identityval);
-
     if (identityval) {
       const _identity = new Identity(identityval);
       setIdentity(_identity);
@@ -59,7 +60,9 @@ export default function IdentityStep({ }) {
         <div className="p-4 rounded-xl h-fit bg-zinc-50 flex flex-col sm:w-1/2 md:w-2/5 space-y-4 border shadow">
           <div className="flex justify-between">
             <div className="bg-stone-200/50 rounded-lg justify-center items-center px-2">
-              <p className="tracking-tighter font-extrabold uppercase bg-gradient-to-r from-pink-700 via-pink-500 to-yellow-500 bg-clip-text text-transparent">Claim Your Identity</p>
+              <p className="tracking-tighter font-extrabold uppercase bg-gradient-to-r from-pink-700 via-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Claim Your Identity
+              </p>
             </div>
             <div
               className="w-6 h-6 rounded-full ml-2 md:ml-0 bg-zinc-300 relative flex justify-center items-center cursor-pointer"
@@ -101,83 +104,82 @@ export default function IdentityStep({ }) {
           </div>
         </div>
 
-        <div>
-          {identity ? (
-            <div className="border shadow p-4 rounded-xl bg-red-500 h-full">
-              <ul>
-                <div className="mb-3">
-                  <p className="font-bold">
-                    Nullifier (<b>Don&apos;t share this </b>) : {""}
-                  </p>
-                  {identity ? identity.getNullifier().toString() : ""}{" "}
-                  <div
-                    onClick={() => {
-                      SetNullifierCopied(true);
-                      copyToClipboard(identity.getNullifier().toString());
-                    }}
-                    className={TrapdoorCopied ? "bg-green-600" : "bg-blue-500"}
-                    aria-label="Copy Trapdoor"
-                  >
-                    <DocumentDuplicate />
-                  </div>
-                </div>
-
-                <div className="mb-3">
-                  <p className="font-bold">
-                    Nullifier (<b>Don&apos;t Share this </b>) :{""}
-                  </p>
-                  {identity ? identity.getTrapdoor().toString() : ""}{" "}
-                  <div
-                    onClick={() => {
-                      copyToClipboard(identity.getTrapdoor().toString());
-                      SetTrapdoorCopied(true);
-                    }}
-                    className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
-                    aria-label="Copy Commitment"
-                  >
-                    <DocumentDuplicate />
-                  </div>
-                </div>
-
-                <div>
-                  <p className="font-bold">
-                    Commitment (This is your Public ID) :{" "}
-                  </p>
-                  {identity ? identity.generateCommitment().toString() : " "}
-                  {"  "}
-                  {/* <b> This is your public ID</b>{" "} */}
-                  <b>
-                    <div
-                      onClick={() => {
-                        copyToClipboard(identity.generateCommitment().toString());
-                        SetCommitmentCopied(true);
-                      }}
-                      className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
-                      aria-label="Copy Commitment"
-                    >
-                      <DocumentDuplicate />
-                    </div>
-                  </b>
-                </div>
-              </ul>
-            </div>
-          ) : (
-            <div className="border shadow p-2 rounded-xl h-full bg-white justify-center items-center md:flex md:flex-row hidden">
-              {
-                loading ? (
-                  <h1>{'LOAAAADING (this needs a spinner)'}</h1>
-                ) : (
-                  <h1 className="text-sm">Create or Load an ID</h1>
-                )
-              }
-            </div>
-          )}
-        </div>
-      </div >
-    </div >
+        <Generated identity={identity} />
+      </div>
+    </div>
   );
 }
 
-// <div flexGrow={1}>
-//         
+
+// <div>
+// {identity ? (
+//   <div className="border shadow p-4 rounded-xl bg-red-500 h-full">
+//     <ul>
+//       <div className="mb-3">
+//         <p className="font-bold">
+//           Nullifier (<b>Don&apos;t share this </b>) : {""}
+//         </p>
+//         {identity ? identity.getNullifier().toString() : ""}{" "}
+//         <div
+//           onClick={() => {
+//             SetNullifierCopied(true);
+//             copyToClipboard(identity.getNullifier().toString());
+//           }}
+//           className={TrapdoorCopied ? "bg-green-600" : "bg-blue-500"}
+//           aria-label="Copy Trapdoor"
+//         >
+//           <DocumentDuplicate />
+//         </div>
 //       </div>
+
+//       <div className="mb-3">
+//         <p className="font-bold">
+//           Nullifier (<b>Don&apos;t Share this </b>) :{""}
+//         </p>
+//         {identity ? identity.getTrapdoor().toString() : ""}{" "}
+//         <div
+//           onClick={() => {
+//             copyToClipboard(identity.getTrapdoor().toString());
+//             SetTrapdoorCopied(true);
+//           }}
+//           className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
+//           aria-label="Copy Commitment"
+//         >
+//           <DocumentDuplicate />
+//         </div>
+//       </div>
+
+//       <div>
+//         <p className="font-bold">
+//           Commitment (This is your Public ID) :{" "}
+//         </p>
+//         {identity ? identity.generateCommitment().toString() : " "}
+//         {"  "}
+//         {/* <b> This is your public ID</b>{" "} */}
+//         <b>
+//           <div
+//             onClick={() => {
+//               copyToClipboard(identity.generateCommitment().toString());
+//               SetCommitmentCopied(true);
+//             }}
+//             className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
+//             aria-label="Copy Commitment"
+//           >
+//             <DocumentDuplicate />
+//           </div>
+//         </b>
+//       </div>
+//     </ul>
+//   </div>
+// ) : (
+//   <div className="border shadow p-2 rounded-xl h-full bg-white justify-center items-center md:flex md:flex-row hidden">
+//     {
+//       loading ? (
+//         <h1>{'LOAAAADING (this needs a spinner)'}</h1>
+//       ) : (
+//         <h1 className="text-sm">Create or Load an ID</h1>
+//       )
+//     }
+//   </div>
+// )}
+// </div>
