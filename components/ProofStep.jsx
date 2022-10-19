@@ -2,42 +2,15 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { keccak256 } from "@ethersproject/solidity";
 const { Group } = require("@semaphore-protocol/group");
-import {
-  Box,
-  Button,
-  Divider,
-  Flex,
-  FormLabel,
-  Heading,
-  Input,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tooltip,
-  Tr,
-} from "@chakra-ui/react";
-import { useDisclosure } from "@chakra-ui/react";
 import { useCallback } from "react";
 import "react-datetime/css/react-datetime.css";
 
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-} from "@chakra-ui/react";
 const { ethers } = require("ethers");
 const {
   generateProof,
   packToSolidityProof,
 } = require("@semaphore-protocol/proof");
+
 export default function ProofStep({
   eve,
   identitycommitment,
@@ -57,7 +30,7 @@ export default function ProofStep({
   const [Id, SetId] = useState();
   const [UpdateVotes, SetUpdateVotes] = useState(false);
   const [EndTime, SetEndTime] = useState();
-  const [Time,SetTime] = useState();
+  const [Time, SetTime] = useState();
 
   let BACKEND_URL = "https://zkvotebackend.herokuapp.com/";
 
@@ -92,7 +65,7 @@ export default function ProofStep({
         const coordinator = pollInstance.coordinator;
         SetCoordinator(coordinator);
         const endtime = pollInstance.endtime;
-        console.log("endtime",ethers.BigNumber.from(endtime).toString());
+        console.log("endtime", ethers.BigNumber.from(endtime).toString());
         SetEndTime(ethers.BigNumber.from(endtime).toString());
         SetId(ethers.BigNumber.from(eve[0].groupId).toString());
         let z = await contract.getlatestVotes(
@@ -222,104 +195,69 @@ export default function ProofStep({
 
   return (
     <>
-      <Box
-        backdropFilter={"blur(16px) saturate(180%)"}
-        backgroundColor={"rgba(17, 25, 40, 0.88)"}
-        borderRadius={20}
-        border={"1px solid rgba(255, 255, 255, 0.125)"}
-        padding={"2.5rem"}
-        margin={"auto"}
-        width={"50%"}
-        boxShadow={"0 10px 10px -5px rgba(156, 255, 0, 0.7)"}
-        mx={10}
-        my={10}
-        display={"flex"}
-        flexDirection={"column"}
-        // textAlign={"center"}
-      >
+      <div className="bg-[#fcffff] p-8 rounded-md">
         {eve == 0 ? (
-          <Box>
-            <Text>This Id does not exist</Text>
-          </Box>
+          <div>
+            <h1>This Id does not exist</h1>
+          </div>
         ) : (
-          <Box>
+          <div>
             {eve && (
-              <Tooltip label={ethers.BigNumber.from(eve[0].groupId).toString()}>
-                <Heading mb={5} fontSize={"1.8rem"}>
+              <div label={ethers.BigNumber.from(eve[0].groupId).toString()}>
+                <h3 className="text-xl mb-4">
                   ID:{" "}
                   {ethers.BigNumber.from(eve[0].groupId)
                     .toString()
                     .slice(0, 10) +
                     "..." +
                     ethers.BigNumber.from(eve[0].groupId).toString().slice(-6)}
-                </Heading>
-              </Tooltip>
+                </h3>
+              </div>
             )}
-            <Box display={"flex"} justifyContent={"space-between"}>
-              <Box>
+            <div className="flex justify-between">
+              <div>
                 {Votes &&
                   Votes.map((val, index) => {
                     console.log("val proposals", val.IndividualGrantee);
                     return (
-                      <Box
-                        display={"flex"}
-                        // justifyContent={"center"}
-                        alignItems={"center"}
-                        gap={5}
-                        my={3}
-                      >
-                        <Tooltip label={val.IndividualGrantee}>
-                          <Text fontSize={"1.5rem"}>
-                            {val.IndividualGrantee.slice(0, 10) +
+                      <div
+                        key={index}
+                        className='flex justify-center my-3 space-x-4'>
+                        <div label={val.IndividualGrantee}>
+                          <p className="text-lg">
+                            {val.IndividualGrantee.slice(0, 5) +
                               "..." +
-                              val.IndividualGrantee.slice(-6)}
+                              val.IndividualGrantee.slice(-5)}
                             :{" "}
-                          </Text>
-                        </Tooltip>
-                        <Input
-                          width={"100px"}
+                          </p>
+                        </div>
+                        <input
+                          className="w-[100px]"
                           placeholder="Votes"
                           value={Position[index]}
                           onChange={(e) =>
                             updatePosition(index, e.target.value)
                           }
-                        ></Input>
+                        />
                         {" : "}
-                        <Text fontSize={"1.5rem"}>
+                        <p className="text-xl">
                           {isNaN(Position[index])
                             ? "0"
                             : Position[index] * Position[index]}{" "}
-                        </Text>
-                      </Box>
-                    );
-                    return (
-                      <div key={index}>
-                        {" "}
-                        {val.IndividualGrantee}:{" "}
-                        <div className="border-2 border-blue-500 ">
-                          {
-                            <Input
-                              placeholder="Votes"
-                              value={Position[index]}
-                              onChange={(e) =>
-                                updatePosition(index, e.target.value)
-                              }
-                            ></Input>
-                          }
-                        </div>
+                        </p>
                       </div>
                     );
                   })}
                 {
-                  <Text mb={5} fontSize={"1.3rem"}>
+                  <p className="text-xl mb-5">
                     Remaining Votes: {RemainingVotes}
-                  </Text>
+                  </p>
                 }
-              </Box>
+              </div>
               {EventData && EventData[0] && EventData[0].time != 0 ? (
-                <Box pl={5}>
+                <div className="pl-5">
                   {EventData && EventData[0] && EventData[0].time != 0 ? (
-                    <Text fontSize={"xl"}>
+                    <p className="text-xl">
                       Start Time: <br />
                       {new Date(
                         Number(EventData[0].time) * 1000
@@ -327,165 +265,134 @@ export default function ProofStep({
                       {new Date(
                         Number(EventData[0].time) * 1000
                       ).toLocaleTimeString()}
-                    </Text>
+                    </p>
                   ) : (
-                    <Text fontSize={"xl"}>
+                    <p className="text-xl">
                       <b>Start Time Status: </b>Not Started
-                    </Text>
+                    </p>
                   )}
 
                   {EndTime != 0 ? (
-                    <Text mt={4} fontSize={"xl"}>
+                    <p mt={4} className="text-xl">
                       End Time: <br /> {new Date(EndTime * 1000).toDateString()}{" "}
                       {new Date(EndTime * 1000).toLocaleTimeString()}
-                    </Text>
-                    
+                    </p>
+
                   ) : (
-                    <Text fontSize={"xl"}>
+                    <p className="text-xl">
                       <b>End Time Status : </b>Not Started
-                    </Text>
+                    </p>
                   )}
-                </Box>
+                </div>
               ) : (
-                <Box pl={5}>
-                  <FormLabel>End Time</FormLabel>
-                  <Input
+                <div className="pl-5">
+                  <label>End Time</label>
+                  <input
                     type={"datetime-local"}
                     onChange={(e) => {
                       const x = new Date(e.target.value);
-                      console.log("New time",Date.parse(x).toString().substring(0,10));
-                      SetTime(Date.parse(x).toString().substring(0,10));
+                      console.log("New time", Date.parse(x).toString().substring(0, 10));
+                      SetTime(Date.parse(x).toString().substring(0, 10));
                     }}
                   />
-                  <Flex mt={5}>
-                    <Button colorScheme={"teal"}
-                     onClick={async () => {
-                      console.log("id",ethers.BigNumber.from(eve[0].groupId).toString());
-                      console.log("Time",Time);
-                      await contract.StartPoll(
-                        ethers.BigNumber.from(eve[0].groupId).toString(),
-                         Time
-                      );
-                    }}
-                    >Start Poll</Button>
-                    
-                  </Flex>
-                </Box>
+                  <div className="flexm mt-5">
+                    <button className="bg-teal-500 text-white"
+                      onClick={async () => {
+                        console.log("id", ethers.BigNumber.from(eve[0].groupId).toString());
+                        console.log("Time", Time);
+                        await contract.StartPoll(
+                          ethers.BigNumber.from(eve[0].groupId).toString(),
+                          Time
+                        );
+                      }}
+                    >Start Poll</button>
+                  </div>
+                </div>
               )}
-            </Box>
-            <Button ml={5}
-              onClick= {async()=>{
+            </div>
+            <button className="ml-5"
+              onClick={async () => {
                 await contract.disperse(ethers.BigNumber.from(eve[0].groupId).toString())
               }}
-            >Disperse</Button>
-            <Divider mb={5} />
-            <Box
+            >Disperse</button>
+            <div className="flex w-full border-b-4" />
+            <div
+              className="flex justify-between items-center"
               display={"flex"}
               alignItems={"center"}
               justifyContent={"space-between"}
             >
-              <Button width={"100%"} onClick={onOpen}>
+              <button className='w-full' onClick={onOpen}>
                 Vote
-              </Button>
-            </Box>
-          </Box>
+              </button>
+            </div>
+          </div>
         )}
-      </Box>
-      <Box
-        backdropFilter={"blur(16px) saturate(180%)"}
-        backgroundColor={"rgba(17, 25, 40, 0.88)"}
-        borderRadius={20}
-        border={"1px solid rgba(255, 255, 255, 0.125)"}
-        padding={"2.5rem"}
-        margin={"auto"}
-        width={"30%"}
-        boxShadow={"0 10px 10px -5px rgba(156, 255, 0, 0.7)"}
-        mx={10}
-        my={10}
-        textAlign={"center"}
-      >
-        <Heading mb={5}>Current Voting Situation</Heading>
+      </div>
+      <div className="backdrop-blur-lg bg-transparent rounded-xl p-4 border w-1/3 shadow mx-10 my-10 text-center">
+        <div className="mb-5 text-sm bg-red-500">ID:{" "}
+          {ethers.BigNumber.from(eve[0].groupId)
+            .toString()
+            .slice(0, 10) +
+            "..." +
+            ethers.BigNumber.from(eve[0].groupId).toString().slice(-6)}</div>
 
-        <TableContainer>
-          <Table>
-            <Thead>
-              <Tr>
-                <Th>Proposal</Th>
-                <Th>Votes</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
+        <div>
+          <div>
+            <div>
+              <div>
+                <p>Proposer</p>
+                <p>Votes</p>
+              </div>
+            </div>
+            <div>
               {Votes &&
                 Votes.map((val, index) => {
                   return (
-                    <Tr>
-                      <Td>
-                        <Tooltip label={val.IndividualGrantee}>
-                          <Text fontSize={"1.5rem"}>
+                    <div key={index}>
+                      <div>
+                        <div label={val.IndividualGrantee}>
+                          <p className="text-xl">
                             {val.IndividualGrantee.slice(0, 10) +
                               "..." +
                               val.IndividualGrantee.slice(-6)}
-                          </Text>
-                        </Tooltip>
-                      </Td>
-                      <Td>
-                        <Text fontSize={"1.5rem"}>
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xl">
                           {ethers.BigNumber.from(val.votes).toString()} votes
-                        </Text>
-                      </Td>
-                    </Tr>
-                  );
-
-                  return (
-                    <Box key={index}>
-                      <Text fontSize={"2xl"} mb={3}>
-                        {val.IndividualGrantee}:{" "}
-                        {ethers.BigNumber.from(val.votes).toString()} votes
-                      </Text>
-                    </Box>
-                  );
-                  return (
-                    <div key={index} className="text-3xl ">
-                      {" "}
-                      {val.IndividualGrantee}:{" "}
-                      <b>{ethers.BigNumber.from(val.votes).toString()}</b> votes
+                        </p>
+                      </div>
                     </div>
                   );
                 })}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </Box>
-      <Modal size={"2xl"} isCentered isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Confirm Your Vote</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Modal overlay */}
+      <div className="" isCentered isOpen={isOpen} onClose={onClose}>
+        {/* <ModalOverlay /> */}
+        <div>
+          <header>Confirm Your Vote</header>
+          <button className="bg-red-500 text-white border px-4 py-2">CLOSE</button>
+          <div>
             {Votes &&
               Votes.map((val, index) => {
                 return (
-                  <Text fontSize={"xl"}>
+                  <p className="text-xl" key={index}>
                     {val.IndividualGrantee}:{" "}
                     {Position[index] ? Position[index] * Position[index] : 0}{" "}
                     Votes
-                  </Text>
-                );
-                return (
-                  <div key={index}>
-                    {val.IndividualGrantee}:{" "}
-                    {Position && Position[index] * Position[index]} <p>Votes</p>
-                  </div>
+                  </p>
                 );
               })}
-          </ModalBody>
+          </div>
 
-          <ModalFooter>
-            {/* <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button> */}
-            <Button
-              colorScheme="teal"
+          <div>
+            <button
+              className="bg-teal-500 w-full"
               width={"100%"}
               // variant="ghost"
               isLoading={Voting}
@@ -497,163 +404,10 @@ export default function ProofStep({
               disabled={NotEnoughVotes}
             >
               Vote
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
-
-  // return (
-  //   <div>
-  //     {eve == 0 ? (
-  //       <div style={{ marginLeft: 30, marginTop: 20 }}>
-  //         <h1>This id does not exist!!</h1>
-  //       </div>
-  //     ) : (
-  //       <div className=" flex-col justify-center m-2 p-2 ">
-  //         {eve && (
-  //           <h2 className=" text-2xl">
-  //             Id: {ethers.BigNumber.from(eve[0].groupId).toString()}
-  //           </h2>
-  //         )}
-  //         <h3 className=" flex-col justify-center text-2xl bold w-80 m-2 p-2">
-  //           {Votes &&
-  //             Votes.map((val, index) => {
-  //               console.log("val proposals", val.IndividualGrantee);
-  //               return (
-  //                 <div key={index}>
-  //                   {" "}
-  //                   {val.IndividualGrantee}:{" "}
-  //                   <div className="border-2 border-blue-500 ">
-  //                     {
-  //                       <Input
-  //                         placeholder="Votes"
-  //                         value={Position[index]}
-  //                         onChange={(e) =>
-  //                           updatePosition(index, e.target.value)
-  //                         }
-  //                       ></Input>
-  //                     }
-  //                   </div>
-  //                 </div>
-  //               );
-  //             })}
-  //           {
-  //             <p className="flex flex-col justify-center">
-  //               Remaining Votes: {RemainingVotes}
-  //             </p>
-  //           }
-  //         </h3>
-  //         <div className="flex flex-col justify-center">
-  //           <Button onClick={onOpen}>Vote</Button>
-
-  //           <Modal isOpen={isOpen} onClose={onClose}>
-  //             <ModalOverlay />
-  //             <ModalContent>
-  //               <ModalHeader>Confirm Your Vote</ModalHeader>
-  //               <ModalCloseButton />
-  //               <ModalBody>
-  //                 {Votes &&
-  //                   Votes.map((val, index) => {
-  //                     return (
-  //                       <div key={index}>
-  //                         {val.IndividualGrantee}:{" "}
-  //                         {Position && Position[index] * Position[index]}{" "}
-  //                         <p>Votes</p>
-  //                       </div>
-  //                     );
-  //                   })}
-  //               </ModalBody>
-
-  //               <ModalFooter>
-  //                 <Button colorScheme="blue" mr={3} onClick={onClose}>
-  //                   Close
-  //                 </Button>
-  //                 <Button
-  //                   variant="ghost"
-  //                   isLoading={Voting}
-  //                   onClick={async () => {
-  //                     console.log("Positions ", Position);
-  //                     console.log("Proposals", Proposals);
-  //                     vote(Proposals, Position);
-  //                   }}
-  //                   disabled={NotEnoughVotes}
-  //                 >
-  //                   Vote
-  //                 </Button>
-  //               </ModalFooter>
-  //             </ModalContent>
-  //           </Modal>
-  //         </div>
-  //         {
-  //           <div>
-  //             {EventData && EventData[0] && EventData[0].time != 0 ? (
-  //               <h2 className=" text-2xl italic">
-  //                 {" "}
-  //                 Start Time:{" "}
-  //                 {new Date(
-  //                   Number(EventData[0].time) * 1000
-  //                 ).toLocaleString()}{" "}
-  //               </h2>
-  //             ) : (
-  //               <h2 className="text-3xl">
-  //                 <b>Status: </b>Not Started
-  //               </h2>
-  //             )}
-  //           </div>
-  //         }
-  //         <div>
-  //           <h2 className="text-2xl">
-  //             {EndTime != 0 ? (
-  //               <p>End time in Unix:{EndTime}</p>
-  //             ) : (
-  //               <p>&quot;Not Started&quot;</p>
-  //             )}
-  //           </h2>
-  //         </div>
-
-  //         {signer._address !== Coordinator ? (
-  //           <div className="bold text-2xl">
-  //             <div className="">
-  //               <div>
-  //                 <Datetime value={date} onChange={handleChange} />
-  //               </div>
-
-  //               <Button
-  //                 className="bold text-2xl"
-  //                 onClick={async () => {
-  //                   await contract.StartPoll(
-  //                     ethers.BigNumber.from(eve[0].groupId).toString(),
-  //                     date
-  //                   );
-  //                 }}
-  //               >
-  //                 Start Poll
-  //               </Button>
-  //             </div>
-  //           </div>
-  //         ) : (
-  //           ""
-  //         )}
-  //         <div className="border-2 border-green-600 ">
-  //           <h3 className="text-4xl flex justify-center ">
-  //             {" "}
-  //             Current Voting situation{" "}
-  //           </h3>
-  //           {Votes &&
-  //             Votes.map((val, index) => {
-  //               return (
-  //                 <div key={index} className="text-3xl ">
-  //                   {" "}
-  //                   {val.IndividualGrantee}:{" "}
-  //                   <b>{ethers.BigNumber.from(val.votes).toString()}</b> votes
-  //                 </div>
-  //               );
-  //             })}
-  //         </div>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
-}
+};

@@ -1,4 +1,3 @@
-import { Input } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import { ethers } from "ethers";
 import { useEnsResolver } from "wagmi";
@@ -55,7 +54,7 @@ export default function AddressInput(props) {
               address = possibleAddress;
             }
             // eslint-disable-next-line no-empty
-          } catch (e) {}
+          } catch (e) { }
         }
         setValue(address);
         if (typeof onChange === "function") {
@@ -68,7 +67,7 @@ export default function AddressInput(props) {
 
   return (
     <div>
-      <Input
+      <input
         id="0xAddress" // name it something other than address for auto fill doxxing
         name="0xAddress" // name it something other than address for auto fill doxxing
         autoComplete="off"
@@ -77,8 +76,8 @@ export default function AddressInput(props) {
         prefix={<Blockie address={currentValue} size={8} scale={3} />}
         value={
           ethers.utils.isAddress(currentValue) &&
-          !isENS(currentValue) &&
-          isENS(ens)
+            !isENS(currentValue) &&
+            isENS(ens)
             ? ens
             : currentValue
         }

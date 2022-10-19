@@ -3,10 +3,9 @@ import { useSigner } from "wagmi";
 import abi from "../helpers/ZkVote.json";
 import GroupStep from "../components/GroupStep";
 import { Identity } from "@semaphore-protocol/identity";
-import { Box, Text } from "@chakra-ui/react";
 const { ethers } = require("ethers");
 
-export default function NewVote({}) {
+export default function NewVote({ }) {
   const [_identity, _setidentity] = useState();
   const [Contract, SetContract] = useState();
   const [Mainnetprovider, SetMainnetprovider] = useState();
@@ -35,17 +34,11 @@ export default function NewVote({}) {
 
   if (!signer) {
     return (
-      <Box
-        h={"70vh"}
-        w={"100vw"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <Text fontWeight={500} fontSize={"4xl"}>
+      <div className="h-3/5 w-screen flex justify-center items-center">
+        <h1 className="text-4xl font-bold">
           Connect your Wallet !!!
-        </Text>
-      </Box>
+        </h1>
+      </div>
     );
   }
 

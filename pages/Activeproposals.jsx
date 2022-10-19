@@ -2,16 +2,6 @@ import React from "react";
 import abi from "../helpers/ZkVote.json";
 import { useState, useEffect } from "react";
 import { Identity } from "@semaphore-protocol/identity";
-import {
-  Box,
-  Button,
-  Heading,
-  Input,
-  Spinner,
-  Tag,
-  Text,
-  Textarea,
-} from "@chakra-ui/react";
 import Link from "next/link";
 import { useSigner } from "wagmi";
 import TextArea from "antd/lib/input/TextArea";
@@ -68,20 +58,14 @@ export default function Activeproposals() {
 
   if (!Events) {
     return (
-      <Box
-        width={"100vw"}
-        height={"80vh"}
-        display={"flex"}
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
-        <Spinner size={"xl"} />
-      </Box>
+      <div className="flex w-screen h-5/6 justify-center items-center">
+        <h1>{'LOAAAADING (this needs a spinner)'}</h1>
+      </div>
     );
   }
 
   return (
-    <Box
+    <div
       display={"flex"}
       mx={"200px"}
       my={20}
@@ -93,7 +77,7 @@ export default function Activeproposals() {
         Events.map((value, i) => {
           let name = ethers.utils.parseBytes32String(value.eventName);
           let id = ethers.BigNumber.from(value.groupId).toString();
-          console.log("id",id);
+          console.log("id", id);
           let members = value.members;
           let isMember = false;
           let des = value.description;
@@ -115,32 +99,25 @@ export default function Activeproposals() {
             value.start.length != 0
               ? (currentstatus = " Voting Started")
               : value.end.length != 0
-              ? (currentstatus = "Voting Ended")
-              : (currentstatus = "Created");
+                ? (currentstatus = "Voting Ended")
+                : (currentstatus = "Created");
           let a = isMember ? "You are a member" : "Not Member";
 
           return (
-            <Box
-              border={"1px solid rgba(255, 255, 255, 0.125)"}
-              boxShadow={"0 10px 10px -5px rgba(156, 255, 0, 0.7)"}
-              padding={"2.5rem"}
-              borderRadius={20}
-              backgroundColor={"rgba(17, 25, 40, 0.88)"}
-              m={5}
-              width={"400px"}
-              // textAlign={"center"}
+            <div
+              key={i}
+              className='border shadow p-4 w-[400px] m-5 rounded-xl'
             >
-              <Heading mb={5}>{name}</Heading>
-              <Text mb={3} fontSize={"xl"}>
+              <header className="mb-5">
+                {name}
+              </header>
+              <p className="mb-3 text-xl">
                 ID: {id.substring(0, 18)}...
-              </Text>
-              <Text mb={5} fontSize={"xl"}>
+              </p>
+              <p className="mb-3 text-xl">
                 Status: {status}...
-              </Text>
-              {/* <Text mb={2} fontSize={"l"}>
-                DESCRIPTION
-              </Text> */}
-              <Box
+              </p>
+              <div
                 width={"100%"}
                 height={"100px"}
                 borderRadius={10}
@@ -150,70 +127,24 @@ export default function Activeproposals() {
                 overflow={"auto"}
               >
                 {des}
-              </Box>
-              <Box mb={5} display={"flex"}>
-                <Button disabled={true}>{a}</Button>
-                <Button ml={5}>
-                  <Link href={"Vote/" + id}>Open</Link>
-                </Button>
-              </Box>
-              {signer && signer._address == admin ? (
-                <Box>
-                  <Input
-                    placeholder="Add voter credentials"
-                    value={NewVoter}
-                    onChange={(e) => SetNewVoter(e.target.value)}
-                    mb={5}
-                  />
-                  <Button
-                    onClick={async () => {
-                      if (!signer) {
-                        alert("Please connect Wallet");
-                      }
-                      const contractwithsigner = new ethers.Contract(
-                        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-                        abi.abi,
-                        signer
-                      );
-                        let arr = [];
-                        console.log("newVoter",NewVoter);
-                        arr.push(NewVoter);
-                        console.log("arr",arr);
-                        const tx = await contractwithsigner.Addvoter(
-                          id,
-                          arr
-                        );
-                        console.log("tx", tx);
-                    }}
-                  >
-                    Add Members
-                  </Button>
-                </Box>
-              ) : (
-                <Tag colorScheme={"red"}>You are not Admin</Tag>
-              )}
-            </Box>
-          );
-
-          return (
-            <div className="border-2 border-black p-2 m-2" key={id}>
-              <p className="text-3xl font-bold">{name}</p>
-              <p className="text-3xl font-bold">Id :{id.substring(0, 18)}...</p>
-              <p className="text-3xl italic ">Description : {des}</p>
-              <h2 className="flex justify-end  font-bold">{status}</h2>
-              <Button disabled={true}>{a}</Button>
-              <div className="text-1xl border-2 border-black w-14 flex justify-end m-2 p-1 bg-pink-400">
-                <Link href={"Vote/" + id}>Open</Link>
               </div>
-
+              <div mb={5} display={"flex"}>
+                <button disabled>{a}</button>
+                <button className="ml-5">
+                  <Link href={"Vote/" + id}>
+                    Open
+                  </Link>
+                </button>
+              </div>
               {signer && signer._address == admin ? (
-                <div className="w-60">
-                  <Input
+                <div>
+                  <inpput
                     placeholder="Add voter credentials"
                     value={NewVoter}
                     onChange={(e) => SetNewVoter(e.target.value)}
+                    className='mb-5'
                   />
-                  <Button
+                  <button
                     onClick={async () => {
                       if (!signer) {
                         alert("Please connect Wallet");
@@ -223,22 +154,26 @@ export default function Activeproposals() {
                         abi.abi,
                         signer
                       );
+                      let arr = [];
+                      console.log("newVoter", NewVoter);
+                      arr.push(NewVoter);
+                      console.log("arr", arr);
                       const tx = await contractwithsigner.Addvoter(
                         id,
-                        NewVoter
+                        arr
                       );
                       console.log("tx", tx);
                     }}
                   >
                     Add Members
-                  </Button>
+                  </button>
                 </div>
               ) : (
-                <p>You are not Admin</p>
+                <div className="bg-red-300 text-white font-medium border">You are not Admin</div>
               )}
             </div>
           );
         })}
-    </Box>
+    </div>
   );
 }

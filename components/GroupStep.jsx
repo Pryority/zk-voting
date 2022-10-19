@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useCallBack, useEffect } from "react";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Box, Button, Heading, Input } from "@chakra-ui/react";
 import AddressInput from "./EthComponents/AddressInput";
 import abi from "../helpers/ZkVote.json";
 
@@ -16,7 +15,7 @@ export default function GroupStep({
   const [NewEventDescription, SetNewEventDescription] = useState();
   const [Proposals, SetProposals] = useState([""]);
   const [Coordinator, SetCoordinator] = useState();
-  const [Fund,SetFund] = useState(0);
+  const [Fund, SetFund] = useState(0);
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     abi.abi,
@@ -57,7 +56,7 @@ export default function GroupStep({
       Proposals,
       Coordinator,
       20,
-      0,{value: (Fund ? ethers.utils.parseEther(Fund ).toString() : 0) }
+      0, { value: (Fund ? ethers.utils.parseEther(Fund).toString() : 0) }
     );
     SetCoordinator("");
     SetNewEventDescription("");
@@ -67,97 +66,84 @@ export default function GroupStep({
   };
 
   return (
-    <Box
-      display={"flex"}
-      justifyContent={"center"}
-      alignItems={"center"}
-      my={"100px"}
-      textAlign={"center"}
+    <div
+      className='cr my-8 text-center'
     >
-      <Box
-        backdropFilter={"blur(16px) saturate(180%)"}
-        backgroundColor={"rgba(17, 25, 40, 0.88)"}
-        borderRadius={20}
-        border={"1px solid rgba(255, 255, 255, 0.125)"}
-        padding={"2.5rem"}
-        width={"50%"}
-        margin={"auto"}
-        boxShadow={"0 10px 10px -5px rgba(156, 255, 0, 0.7)"}
+      <div
+        className='backgrop-blur-lg bg-red-500 rounded-xl border w-1/2 mx-auto shadow p-4'
       >
-        <Heading borderBottom={"1px solid white"} pb={2} mb={5}>
+        <header className="border-b pb-2 mb-5">
           Create a new vote
-        </Heading>
-        <Input
-          my={3}
+        </header>
+        <input
+          className="my-3"
           placeholder="Enter Vote proposal Name"
           value={NewEventName}
           onChange={(e) => SetNewEventName(e.target.value)}
         />
-        <Input
-          my={3}
+        <input
+          className="my-3"
           placeholder="Enter Description of Voting "
           value={NewEventDescription}
           onChange={(e) => SetNewEventDescription(e.target.value)}
         />
-        <Box my={3}>
+        <div className="my-3">
           {Proposals.map((proposal, index) => (
-            <Box my={3} key={index} display={"flex"}>
-              <Input
+            <div className="my-3 flex" key={index}>
+              <input
                 placeholder="Enter address"
                 value={proposal}
                 onChange={(e) => updateProposals(e.target.value, index)}
-                mb={3}
+                className="my-3"
               />
               {index >= 0 && (
-                <Button
-                  ml={5}
+                <button
+                  className="ml-5"
                   onClick={() => {
                     RemoveProposals(index);
                   }}
                 >
                   <DeleteOutlined />
-                </Button>
+                </button>
               )}
               {index === Proposals.length - 1 && (
-                <Button
-                  ml={5}
+                <button
+                  className="ml-5"
                   onClick={() => {
                     AddProposals();
                   }}
                 >
                   <PlusOutlined />
-                </Button>
+                </button>
               )}
-            </Box>
+            </div>
           ))}
-        </Box>
-        <Box my={3}>
+        </div>
+        <div className="my-3">
           <AddressInput
             placeholder="Coordinator"
             value={Coordinator}
             ensProvider={mainnetprovider}
             onChange={(e) => SetCoordinator(e)}
           />
-        </Box>
-        <Box my={3}>
-          <Input
+        </div>
+        <div className="my-3">
+          <input
             placeholder="Ether to distribute"
-            value= {Fund}
-            onChange={e=> SetFund(e.target.value)}
+            value={Fund}
+            onChange={e => SetFund(e.target.value)}
           />
-        </Box>
-        <Button
-          justifySelf={"center"}
-          mt={3}
-          colorScheme="green"
+        </div>
+        <button
+          className="mt-3 bg-green-500 justify-center"
           onClick={async () => {
             await CreateProposal();
           }}
         >
           Create Proposal
-        </Button>
-      </Box>
-    </Box>
+        </button>
+      </div>
+    </div>
   );
 
 }
