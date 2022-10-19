@@ -72,6 +72,7 @@ export default function Activeproposals() {
             let name = ethers.utils.parseBytes32String(value.eventName);
             let id = ethers.BigNumber.from(value.groupId).toString();
             console.log("id", id);
+            console.log("GROUP ID", ethers.utils.formatBytes32String(value.groupId));
             let members = value.members;
             let isMember = false;
             let des = value.description;

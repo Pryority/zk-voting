@@ -45,6 +45,7 @@ export default function ProofStep({
     );
 
     console.log(start);
+    console.log('CONTRACT', contract);
     return start.map((e) => ({
       groupId: e.args[0],
       time: e.args[1],
@@ -128,6 +129,7 @@ export default function ProofStep({
       b[0],
       keccak256(["address"], [b[0]])
     );
+    console.log('ID COMMITMENT', identitycommitment)
     const fullProof = await generateProof(
       identitycommitment,
       group,
@@ -204,13 +206,11 @@ export default function ProofStep({
           ) : (
             <div>
               {eve && (
-                <div label={ethers.BigNumber.from(eve[0].groupId).toString()}>
-                  <h2 className="text-xl">
-                    {/* HELOOOO {ethers.utils.parseBytes32String(eve[0].groupId)} */}
-                    {/* WORLD {ethers.utils.formatBytes32String(NewEventName)} */}
-
-                  </h2>
-                  <h3 className="text-xl mb-4">
+                <div
+                  label={ethers.BigNumber.from(eve[0].groupId).toString()}
+                  className='flex w-full justify-between items-center'
+                >
+                  <h3 className="text-xl">
                     Proposal ID:{" "}
                     {ethers.BigNumber.from(eve[0].groupId)
                       .toString()
@@ -218,17 +218,20 @@ export default function ProofStep({
                       "..." +
                       ethers.BigNumber.from(eve[0].groupId).toString().slice(-3)}
                   </h3>
+                  <h2 className="text-sm">
+                    Created By: {contract.signer._address.substring(0, 5) + '...' + contract.signer._address.substring(contract.signer._address.length, contract.signer._address.length - 5)}
+                  </h2>
                 </div>
               )}
               <div className="flex justify-between">
                 <div>
                   {Votes &&
                     Votes.map((val, index) => {
-                      console.log("val proposals", val.IndividualGrantee);
+                      console.log("PROPOSER", val.IndividualGrantee);
                       return (
                         <div
                           key={index}
-                          className='flex justify-center my-3 space-x-4'>
+                          className='flex justify-center items-center space-y-4 space-x-4'>
                           <div label={val.IndividualGrantee}>
                             <p className="text-lg">
                               <p className="text-xl" key={index}>
@@ -236,26 +239,17 @@ export default function ProofStep({
                                 {Position[index] ? Position[index] * Position[index] : 0}{" "}
                                 Votes
                               </p>
-                              {val.IndividualGrantee.slice(0, 5) +
-                                "..." +
-                                val.IndividualGrantee.slice(-5)}
-                              :{" "}
                             </p>
                           </div>
                           <input
-                            className="w-[100px]"
+                            className="w-[100px] border rounded p-1"
                             placeholder="Votes"
+                            type={'number'}
                             value={Position[index]}
                             onChange={(e) =>
                               updatePosition(index, e.target.value)
                             }
                           />
-                          {" : "}
-                          <p className="text-xl">
-                            {isNaN(Position[index])
-                              ? "0"
-                              : Position[index] * Position[index]}{" "}
-                          </p>
                         </div>
                       );
                     })}
@@ -306,88 +300,46 @@ export default function ProofStep({
                         SetTime(Date.parse(x).toString().substring(0, 10));
                       }}
                     />
-                    <div className="flexm mt-5">
-                      <button className="bg-teal-500 text-white"
-                        onClick={async () => {
-                          console.log("id", ethers.BigNumber.from(eve[0].groupId).toString());
-                          console.log("Time", Time);
-                          await contract.StartPoll(
-                            ethers.BigNumber.from(eve[0].groupId).toString(),
-                            Time
-                          );
-                        }}
-                      >Start Poll</button>
-                    </div>
                   </div>
                 )}
-              </div>
-              <button className="ml-5"
-                onClick={async () => {
-                  await contract.disperse(ethers.BigNumber.from(eve[0].groupId).toString())
-                }}
-              >Disperse</button>
-              <div className="flex w-full border-b-4" />
-              <div
-                className="flex justify-between items-center"
-              >
-                <button className='w-full'>
-                  Vote
-                </button>
               </div>
             </div>
           )}
         </div>
-        <div className="backdrop-blur-lg bg-[#fcffff] rounded-xl p-4 border w-1/3 shadow mx-10 my-10 text-center">
-          <div className="mb-5 text-sm bg-red-500">ID:{" "}
-            {ethers.BigNumber.from(eve[0].groupId)
-              .toString()
-              .slice(0, 10) +
-              "..." +
-              ethers.BigNumber.from(eve[0].groupId).toString().slice(-6)}</div>
-
-          <div>
-            <div>
-              <div>
-                <div>
-                  <p>Proposer</p>
-                  <p>Votes</p>
-                </div>
-              </div>
-              <div>
-                {Votes &&
-                  Votes.map((val, index) => {
-                    return (
-                      <div key={index}>
-                        <div>
-                          <div label={val.IndividualGrantee}>
-                            <p className="text-xl">
-                              {val.IndividualGrantee.slice(0, 10) +
-                                "..." +
-                                val.IndividualGrantee.slice(-6)}
-                            </p>
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-xl">
-                            {ethers.BigNumber.from(val.votes).toString()} votes
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-          </div>
-        </div>
         {/* Modal overlay */}
         <div >
           {/* <ModalOverlay /> */}
-          <div>
-            {/* <button className="bg-red-500 text-white border px-4 py-2">CLOSE</button> */}
-            <div>
+          <section id="actions"
+            className="grid grid-cols-3"
+          >
+            <div className="flex w-full p-8">
               <button
-                className='px-4 bg-lime-600  text-white border border-[#1e1e1e]/50 hover:bg-lime-400 transition ease-in-and-out duration-100 hover:text-zinc-800 hover:animate-pulse rounded-md'
-                width={"100%"}
+                className="px-4 w-full bg-teal-500  text-white border border-[#1e1e1e]/50 hover:bg-teal-400 transition ease-in-and-out duration-100 hover:text-zinc-800 rounded-md"
+                onClick={async () => {
+                  console.log("id", ethers.BigNumber.from(eve[0].groupId).toString());
+                  console.log("Time", Time);
+                  await contract.StartPoll(
+                    ethers.BigNumber.from(eve[0].groupId).toString(),
+                    Time
+                  );
+                }}
+              >
+                Start Poll
+              </button>
+            </div>
+            <div className="flex w-full p-8">
+              <button
+                className="px-4 w-full bg-red-600  text-white border border-[#1e1e1e]/50 hover:bg-red-500 transition ease-in-and-out duration-100 hover:text-zinc-800 rounded-md"
+                onClick={async () => {
+                  await contract.disperse(ethers.BigNumber.from(eve[0].groupId).toString())
+                }}
+              >
+                Disperse
+              </button>
+            </div>
+            <div className="flex w-full p-8">
+              <button
+                className='px-4 w-full bg-lime-600  text-white border border-[#1e1e1e]/50 hover:bg-lime-400 transition ease-in-and-out duration-100 hover:text-zinc-800 rounded-md'
                 // variant="ghost"
                 isLoading={Voting}
                 onClick={async () => {
@@ -400,9 +352,9 @@ export default function ProofStep({
                 Confirm Vote
               </button>
             </div>
-          </div>
+          </section>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };

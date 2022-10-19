@@ -50,15 +50,15 @@ export default function GroupStep({
   }
 
   const CreateProposal = async () => {
-    // let proposals = [...EligibleVoters];
+    let proposals = [...EligibleVoters];
 
-    // const newproposals = proposals.map((val, index) => {
-    //   if (val.length < 32) {
-    //     return ethers.utils.formatBytes32String(val);
-    //   }
-    //   return val;
-    // });
-    // SetEligibleVoters(newproposals);
+    const newproposals = proposals.map((val, index) => {
+      if (val.length < 32) {
+        return ethers.utils.formatBytes32String(val);
+      }
+      return val;
+    });
+    SetEligibleVoters(newproposals);
     console.log("EligibleVoters", EligibleVoters);
     await contract.NewVoteInstance(
       ethers.utils.formatBytes32String(NewEventName),

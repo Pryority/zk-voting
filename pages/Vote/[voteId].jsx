@@ -20,7 +20,7 @@ export default function Vote() {
   ), []);
 
   console.log("provider", provider);
-  console.log("signer", signer);
+  // console.log("signer", signer);
   const contract = useMemo(
     () =>
       new ethers.Contract(
@@ -42,7 +42,7 @@ export default function Vote() {
   );
 
   const getEvents = useCallback(async () => {
-    console.log("voteid", voteId);
+    // console.log("voteid", voteId);
     if (!voteId || !contract) {
       return [];
     }
