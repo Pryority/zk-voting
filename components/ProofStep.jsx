@@ -233,16 +233,17 @@ export default function ProofStep({
                     return (
                       <div
                         key={index}
-                        className='grid grid-cols-2 justify-center items-center   w-full'>
+                        className='grid md:grid-cols-2 justify-center items-center w-full'>
                         <div label={val.IndividualGrantee}>
                           <p className="text-lg" key={index}>
                             <span className="uppercase p-1 px-2 tracking-tighter font-bold text-sky-800 rounded-lg bg-blue-300 border text-sm">You</span> ({val.IndividualGrantee.substring(0, 5) + '...' + val.IndividualGrantee.substring(val.IndividualGrantee, val.IndividualGrantee.length - 5)}):{" "}
                           </p>
                         </div>
                         {/* VOTE STEPPER */}
-                        <div className="relative w-full justify-center items-center flex">
+                        <div className="flex w-full justify-center items-center space-x-2">
+                          <p className="text-zinc-800">Votes</p>
                           <input
-                            className="w-[100px] border rounded p-1 absolute"
+                            className="w-[100px] border rounded p-1"
                             placeholder={Position[index] ? Position[index] * Position[index] : 0}
                             type={'number'}
                             value={Position[index]}
@@ -250,7 +251,7 @@ export default function ProofStep({
                               updatePosition(index, e.target.value)
                             }
                           />
-                          {Position <= 0 ? (<p className="absolute text-zinc-800">Votes</p>) : ''}
+
                         </div>
                       </div>
 
