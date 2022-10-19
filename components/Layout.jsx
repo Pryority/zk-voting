@@ -3,7 +3,7 @@ import Header from "./Header";
 
 export default function Layout({ children }) {
   return (
-    <div className="bg-red-500">
+    <div className="bg-[#fcfff]">
       <Header />
       <div>{children}</div>
     </div>

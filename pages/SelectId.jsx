@@ -5,7 +5,7 @@ export default function SelectId() {
   const router = useRouter();
 
   return (
-    <div className="backdrop-blur-lg bg-red-500 rounded-lg border p-2 mx-auto my-40 text-center">
+    <div className="rounded-lg border p-2 mx-auto my-40 text-center">
       <header className="border-b pb-2 mb-5">
         {" "}
         Enter the proposal Id
