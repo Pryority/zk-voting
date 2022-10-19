@@ -121,15 +121,7 @@ export default function Activeproposals() {
                       {status === 'Live' && (<div className="w-2 h-2 rounded-full bg-red-500" />)}
                     </div>
                   </div>
-                  <div
-                    width={"100%"}
-                    height={"100px"}
-                    borderRadius={10}
-                    padding={3}
-                    border={"1px solid rgba(255, 255, 255, 0.125)"}
-                    mb={5}
-                    overflow={"auto"}
-                  >
+                  <div className="flex w-full h-[100px] rounded p-4 border overflow-auto">
                     {des}
                   </div>
                   <div mb={5} display={"flex"}>
