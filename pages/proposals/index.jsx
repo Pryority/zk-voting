@@ -134,7 +134,7 @@ export default function Activeproposals() {
                   <div mb={5} display={"flex"}>
                     <button disabled>{a}</button>
                     <button className="ml-5">
-                      <Link href={"Vote/" + id}>
+                      <Link href={"vote/" + id}>
                         Open
                       </Link>
                     </button>
