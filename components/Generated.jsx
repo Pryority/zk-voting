@@ -1,5 +1,5 @@
+import { DocumentDuplicateIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react'
-import { DocumentDuplicate } from '@heroicons/react/24/outline'
 
 export default function Generated({ identity }) {
     const [loading, setLoading] = useState(false);
@@ -31,10 +31,10 @@ export default function Generated({ identity }) {
                         {identity ? identity.getNullifier().toString() : ""}{" "}
                         <div
                             onClick={getSetNullifier}
-                            className={NullifierCopied ? "bg-green-600" : "bg-blue-500"}
+                            className={NullifierCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}
                             aria-label="Copy Trapdoor"
                         >
-                            <DocumentDuplicate className='w-8 h-8 text-blue-500' />
+                            <DocumentDuplicateIcon className='w-8 h-8 text-white' />
                         </div>
                     </div>
 
@@ -45,10 +45,10 @@ export default function Generated({ identity }) {
                         {identity ? identity.getTrapdoor().toString() : ""}{" "}
                         <div
                             onClick={getSetTrapdoor}
-                            className={TrapdoorCopied ? "bg-green-600" : "bg-blue-500"}
+                            className={TrapdoorCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}
                             aria-label="Copy Commitment"
                         >
-                            <DocumentDuplicate className='w-8 h-8 text-blue-500' />
+                            <DocumentDuplicateIcon className='w-8 h-8 text-white' />
                         </div>
                     </div>
 
@@ -60,10 +60,10 @@ export default function Generated({ identity }) {
                         {"  "}
                         <div
                             onClick={getSetCommitment}
-                            className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
+                            className={CommitmentCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}
                             aria-label="Copy Commitment"
                         >
-                            <DocumentDuplicate className='w-8 h-8 text-blue-500' />
+                            <DocumentDuplicateIcon className='w-8 h-8 text-white' />
                         </div>
                     </div>
                 </div>
@@ -76,6 +76,21 @@ export default function Generated({ identity }) {
                     )}
                 </div>
             )}
+            {/* {identity ? (
+                <div className='flex flex-col'>
+                    <p className="font-bold">
+                        Commitment (This is your Public ID) :{" "}
+                    </p>
+                    {identity ? identity.generateCommitment().toString() : " "}
+                    {"  "}
+                    <div
+                        onClick={getSetCommitment}
+                        className={`relative ${CommitmentCopied ? "bg-green-600" : "bg-blue-500 h-16 w-16 justify-center items-center flex rounded"}`}
+                    >
+                        <DocumentDuplicateIcon />
+                    </div>
+                </div>
+            ) : 'meh'} */}
         </div>
     )
 };
