@@ -198,67 +198,65 @@ export default function ProofStep({
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
       <div className="absolute grid w-full justify-center items-center py-24">
-        <div className="bg-[#fcffff] border shadow p-8 rounded-md">
+        <div className="bg-[#fcffff] border shadow p-8 rounded-md flex flex-col space-y-8">
           {eve == 0 ? (
             <div>
               <h1>This ID does not exist</h1>
             </div>
           ) : (
-            <div>
+            <>
               {eve && (
                 <div
                   label={ethers.BigNumber.from(eve[0].groupId).toString()}
-                  className='flex w-full justify-between items-center'
+                  className='flex flex-col w-full items-center'
                 >
-                  <h3 className="text-xl">
-                    Proposal ID:{" "}
-                    {ethers.BigNumber.from(eve[0].groupId)
-                      .toString()
-                      .slice(0, 3) +
-                      "..." +
-                      ethers.BigNumber.from(eve[0].groupId).toString().slice(-3)}
-                  </h3>
-                  <h2 className="text-sm">
-                    Created By: {contract.signer._address.substring(0, 5) + '...' + contract.signer._address.substring(contract.signer._address.length, contract.signer._address.length - 5)}
-                  </h2>
+                  <div className="flex w-full justify-between items-center">
+                    <h3 className="text-xl">
+                      Proposal ID:{" "}
+                      {ethers.BigNumber.from(eve[0].groupId)
+                        .toString()
+                        .slice(0, 3) +
+                        "..." +
+                        ethers.BigNumber.from(eve[0].groupId).toString().slice(-3)}
+                    </h3>
+                    <h2 className="text-sm">
+                      Created By: {contract.signer._address.substring(0, 5) + '...' + contract.signer._address.substring(contract.signer._address.length, contract.signer._address.length - 5)}
+                    </h2>
+                  </div>
                 </div>
               )}
-              <div className="flex justify-between">
-                <div>
-                  {Votes &&
-                    Votes.map((val, index) => {
-                      console.log("PROPOSER", val.IndividualGrantee);
-                      return (
-                        <div
-                          key={index}
-                          className='flex justify-center items-center space-y-4 space-x-4'>
-                          <div label={val.IndividualGrantee}>
-                            <p className="text-lg">
-                              <p className="text-xl" key={index}>
-                                <span className="uppercase p-1 px-3 tracking-tighter font-bold text-slate-800 rounded-xl bg-blue-300 border-2">You</span> ({val.IndividualGrantee.substring(0, 5) + '...' + val.IndividualGrantee.substring(val.IndividualGrantee, val.IndividualGrantee.length - 5)}):{" "}
-                                {Position[index] ? Position[index] * Position[index] : 0}{" "}
-                                Votes
-                              </p>
-                            </p>
-                          </div>
-                          <input
-                            className="w-[100px] border rounded p-1"
-                            placeholder="Votes"
-                            type={'number'}
-                            value={Position[index]}
-                            onChange={(e) =>
-                              updatePosition(index, e.target.value)
-                            }
-                          />
+              <div className="flex justify-center space-x-16">
+
+                {Votes &&
+                  Votes.map((val, index) => {
+                    console.log("PROPOSER", val.IndividualGrantee);
+                    return (
+                      <div
+                        key={index}
+                        className='flex justify-center items-center  space-x-4'>
+                        <div label={val.IndividualGrantee}>
+                          <p className="text-xl" key={index}>
+                            <span className="uppercase p-1 px-3 tracking-tighter font-bold text-sky-800 rounded-xl bg-blue-300 border">You</span> ({val.IndividualGrantee.substring(0, 5) + '...' + val.IndividualGrantee.substring(val.IndividualGrantee, val.IndividualGrantee.length - 5)}):{" "}
+                          </p>
                         </div>
-                      );
-                    })}
-                  {
-                    <p className="text-xl mb-5">
-                      Remaining Votes: {RemainingVotes}
-                    </p>
-                  }
-                </div>
+                        <input
+                          className="w-[100px] border rounded p-1"
+                          placeholder={Position[index] ? Position[index] * Position[index] : 0}
+                          type={'number'}
+                          value={Position[index]}
+                          onChange={(e) =>
+                            updatePosition(index, e.target.value)
+                          }
+                        />
+                      </div>
+                    );
+                  })}
+                {/* {
+                  <p className="text-xl mb-5">
+                    Remaining Votes: {RemainingVotes}
+                  </p>
+                } */}
+
                 {EventData && EventData[0] && EventData[0].time != 0 ? (
                   <div className="pl-5">
                     {EventData && EventData[0] && EventData[0].time != 0 ? (
@@ -278,7 +276,7 @@ export default function ProofStep({
                     )}
 
                     {EndTime != 0 ? (
-                      <p mt={4} className="text-xl">
+                      <p className="text-xl">
                         End Time: {new Date(EndTime * 1000).toDateString()}{" "}
                         {new Date(EndTime * 1000).toLocaleTimeString()}
                       </p>
@@ -290,8 +288,8 @@ export default function ProofStep({
                     )}
                   </div>
                 ) : (
-                  <div className="pl-5">
-                    <label>End Time</label>
+                  <div className="flex flex-col">
+                    <p className="text-sm">End Time</p>
                     <input
                       type={"datetime-local"}
                       onChange={(e) => {
@@ -303,7 +301,7 @@ export default function ProofStep({
                   </div>
                 )}
               </div>
-            </div>
+            </>
           )}
         </div>
         {/* Modal overlay */}
