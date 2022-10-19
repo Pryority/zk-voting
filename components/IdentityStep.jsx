@@ -53,9 +53,9 @@ export default function IdentityStep({ }) {
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
       <div className="absolute flex flex-col w-full justify-center items-center h-screen ">
-        {isOpen ? (<div className="absolute bg-black/60 flex items-center h-screen w-full z-50  ">
+        <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? 'flex' : 'hidden'}`}>
           <SemaphoreIntro toggle={toggle} />
-        </div>) : (<></>)}
+        </div>
         <div className="p-4 rounded-xl h-fit bg-zinc-50 flex flex-col sm:w-1/2 md:w-2/5 space-y-4 border shadow">
           <div className="flex justify-between">
             <div className="bg-stone-200/50 rounded-lg justify-center items-center px-2">
@@ -63,7 +63,7 @@ export default function IdentityStep({ }) {
             </div>
             <div
               className="w-6 h-6 rounded-full ml-2 md:ml-0 bg-zinc-300 relative flex justify-center items-center cursor-pointer"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={toggle}
             >
               <div className="w-4 h-4 rounded-full bg-white relative flex justify-center items-center object-center transition ease-in-out duration-200 hover:bg-black">
                 <InformationCircleIcon className="h-6 w-6 absolute object-center text-stone-700 transition ease-in-out duration-200 hover:text-stone-50" />
@@ -75,7 +75,7 @@ export default function IdentityStep({ }) {
             placeholder="Enter a secret message to generate Identity "
             value={SecretString}
             onChange={(e) => SetSecretString(e.target.value)}
-          ></input>
+          />
           <div className="flex flex-col items-center justify-center w-full space-y-1">
             <button
               className={`w-full ${SecretString ? 'bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 transition ease-in-out duration-200 text-white cursor-pointer' : 'bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed'}`}
@@ -101,80 +101,83 @@ export default function IdentityStep({ }) {
           </div>
         </div>
 
-      </div>
+        <div>
+          {identity ? (
+            <div className="border shadow p-4 rounded-xl bg-red-500 h-full">
+              <ul>
+                <div className="mb-3">
+                  <p className="font-bold">
+                    Nullifier (<b>Don&apos;t share this </b>) : {""}
+                  </p>
+                  {identity ? identity.getNullifier().toString() : ""}{" "}
+                  <div
+                    onClick={() => {
+                      SetNullifierCopied(true);
+                      copyToClipboard(identity.getNullifier().toString());
+                    }}
+                    className={TrapdoorCopied ? "bg-green-600" : "bg-blue-500"}
+                    aria-label="Copy Trapdoor"
+                  >
+                    <DocumentDuplicate />
+                  </div>
+                </div>
+
+                <div className="mb-3">
+                  <p className="font-bold">
+                    Nullifier (<b>Don&apos;t Share this </b>) :{""}
+                  </p>
+                  {identity ? identity.getTrapdoor().toString() : ""}{" "}
+                  <div
+                    onClick={() => {
+                      copyToClipboard(identity.getTrapdoor().toString());
+                      SetTrapdoorCopied(true);
+                    }}
+                    className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
+                    aria-label="Copy Commitment"
+                  >
+                    <DocumentDuplicate />
+                  </div>
+                </div>
+
+                <div>
+                  <p className="font-bold">
+                    Commitment (This is your Public ID) :{" "}
+                  </p>
+                  {identity ? identity.generateCommitment().toString() : " "}
+                  {"  "}
+                  {/* <b> This is your public ID</b>{" "} */}
+                  <b>
+                    <div
+                      onClick={() => {
+                        copyToClipboard(identity.generateCommitment().toString());
+                        SetCommitmentCopied(true);
+                      }}
+                      className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
+                      aria-label="Copy Commitment"
+                    >
+                      <DocumentDuplicate />
+                    </div>
+                  </b>
+                </div>
+              </ul>
+            </div>
+          ) : (
+            <div className="border shadow p-2 rounded-xl h-full bg-white justify-center items-center md:flex md:flex-row hidden">
+              {
+                loading ? (
+                  <h1>{'LOAAAADING (this needs a spinner)'}</h1>
+                ) : (
+                  <h1 className="text-sm">Create or Load an ID</h1>
+                )
+              }
+            </div>
+          )}
+        </div>
+      </div >
     </div >
   );
 }
 
 // <div flexGrow={1}>
-//         {identity ? (
-//           <div className="border shadow p-4 rounded-xl bg-red-500 h-full">
-//             <ul>
-//               <div className="mb-3">
-//                 <p className="font-bold">
-//                   Trapdoor (<b>Don&apos;t share this </b>) : {""}
-//                 </p>
-//                 {identity ? identity.getTrapdoor().toString() : ""}{" "}
-//                 <div
-//                   onClick={() => {
-//                     SetTrapdoorCopied(true);
-//                     copyToClipboard(identity.getTrapdoor().toString());
-//                   }}
-//                   className={TrapdoorCopied ? "bg-green-600" : "bg-blue-500"}
-//                   aria-label="Copy Trapdoor"
-//                 >
-//                   <DocumentDuplicate />
-//                 </div>
-//               </div>
-
-//               <div className="mb-3">
-//                 <p className="font-bold">
-//                   Nullifier (<b>Don&apos;t Share this </b>) :{""}
-//                 </p>
-//                 {identity ? identity.getNullifier().toString() : ""}{" "}
-//                 <div
-//                   onClick={() => {
-//                     copyToClipboard(identity.getTrapdoor().toString());
-//                     SetCommitmentCopied(true);
-//                   }}
-//                   className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
-//                   aria-label="Copy Commitment"
-//                 >
-//                   <DocumentDuplicate />
-//                 </div>
-//               </div>
-
-//               <div>
-//                 <p className="font-bold">
-//                   Commitment (This is your Public ID) :{" "}
-//                 </p>
-//                 {identity ? identity.generateCommitment().toString() : " "}
-//                 {"  "}
-//                 {/* <b> This is your public ID</b>{" "} */}
-//                 <b>
-//                   <div
-//                     onClick={() => {
-//                       copyToClipboard(identity.getTrapdoor().toString());
-//                       SetCommitmentCopied(true);
-//                     }}
-//                     className={CommitmentCopied ? "bg-green-600" : "bg-blue-500"}
-//                     aria-label="Copy Commitment"
-//                   >
-//                     <DocumentDuplicate />
-//                   </div>
-//                 </b>
-//               </div>
-//             </ul>
-//           </div>
-//         ) : (
-//           <div className="border shadow p-2 rounded-xl h-full bg-white justify-center items-center md:flex md:flex-row hidden">
-//             {
-//               loading ? (
-//                 <h1>{'LOAAAADING (this needs a spinner)'}</h1>
-//               ) : (
-//                 <h1 className="text-sm">Create or Load an ID</h1>
-//               )
-//             }
-//           </div>
-//         )}
+//         
 //       </div>
