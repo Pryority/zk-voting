@@ -5,7 +5,7 @@ import React, { useState } from "react";
 export default function SemaphoreIntro({ toggle }) {
 
   return (
-    <div className='backdrop-blur-lg bg-[#fcffff] rounded border border-[#fcffff] p-4 text-base md:text-lg leading-5 mx-auto shadow max-w-3xl'>
+    <div className='backdrop-blur-lg bg-[#fcffff] rounded border border-[#fcffff] p-4 text-base md:text-lg leading-5 mx-auto shadow max-w-[300px] flex flex-col md:w-2/3'>
       <div className="flex w-full justify-end text-stone-500 transition ease-in-out duration-200 hover:text-stone-600">
         <XCircleIcon className="h-6 w-6 cursor-pointer" onClick={toggle} />
       </div>

@@ -51,18 +51,18 @@ export default function IdentityStep({ }) {
   }
 
   return (
-    <div className="text-base md:text-lg leading-5 w-full min-h-screen justify-center items-center">
-      <div className="relative flex flex-col w-full justify-center items-center h-screen ">
-        {isOpen ? (<div className="absolute bg-black/60 flex items-center p-40 h-screen w-full z-50">
+    <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
+      <div className="absolute flex flex-col w-full justify-center items-center h-screen ">
+        {isOpen ? (<div className="absolute bg-black/60 flex items-center h-screen w-full z-50">
           <SemaphoreIntro toggle={toggle} />
         </div>) : (<></>)}
-        <div className="p-4 rounded-xl h-fit bg-zinc-50 flex flex-col space-y-4 border">
+        <div className="p-4 rounded-xl h-fit bg-zinc-50 flex flex-col sm:w-1/2 md:w-2/5 space-y-4 border">
           <div className="flex justify-between">
             <div className="bg-stone-200/50 rounded-lg justify-center items-center px-2">
               <p className="tracking-tighter font-extrabold uppercase bg-gradient-to-r from-pink-700 via-pink-500 to-yellow-500 bg-clip-text text-transparent">Claim Your Identity</p>
             </div>
             <div
-              className="w-6 h-6 rounded-full bg-zinc-300 relative flex justify-center items-center cursor-pointer"
+              className="w-6 h-6 rounded-full ml-2 md:ml-0 bg-zinc-300 relative flex justify-center items-center cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
             >
               <div className="w-4 h-4 rounded-full bg-white relative flex justify-center items-center object-center">
