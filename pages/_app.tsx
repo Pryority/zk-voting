@@ -2,12 +2,12 @@ import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { chain, configureChains, createStorage, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import Layout from "../components/Layout";
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, provider } = configureChains(
   [chain.goerli, chain.polygonMumbai, chain.hardhat],
   [
     alchemyProvider({
@@ -26,19 +26,18 @@ const { connectors } = getDefaultWallets({
 const wagmiClient = createClient({
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider
+  provider
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-      <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </RainbowKitProvider>
-      </WagmiConfig>
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider chains={chains}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </RainbowKitProvider>
+    </WagmiConfig>
   );
 }
 
