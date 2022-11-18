@@ -19,25 +19,23 @@ const provider = new ethers.providers.JsonRpcProvider(goerliRpcUrl);
 const signer = new ethers.Wallet(RelayerPrivateKey, provider);
 const contract = new ethers.Contract(NEXT_PUBLIC_CONTRACT_ADDRESS, abi.abi, signer);
 
-app.post("/vote", async (req, res) => {
+// app.post("/vote", async (req, res) => {
 
-  const { proposals, position, hash, id, solidityProof } = req.body;
-  console.log("proposals", proposals, "position", position, "hash", hash, "id", id, "solidityProof", solidityProof);
+//   const { proposals, position, hash, id, solidityProof } = req.body;
+//   console.log("proposals", proposals, "position", position, "hash", hash, "id", id, "solidityProof", solidityProof);
 
-  try {
+//   try {
 
-    const tx = await contract.castVote(proposals, position, hash, id, solidityProof, { gasLimit: 500000 });
-    console.log("tx done ", tx);
-    res.status(200).end();
-  }
+//     const tx = await contract.castVote(proposals, position, hash, id, solidityProof, { gasLimit: 500000 });
+//     console.log("tx done ", tx);
+//     res.status(200).end();
+//   }
 
-  catch (error) {
-    console.log("error", error);
-    res.status(400).end();
-  }
-});
-
-
+//   catch (error) {
+//     console.log("error", error);
+//     res.status(400).end();
+//   }
+// });
 
 app.listen(port, () => {
   // console.log("Started to listen  ",server);

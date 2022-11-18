@@ -113,7 +113,7 @@ export default function IdentityStep({ }) {
   }, [walletAddress]);
 
   return (
-    <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center overflow-scroll">
+    <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center overflow-scroll bg-gradient-to-bl from-teal-50 via-teal-100 to-yellow-300/40">
       <div className={`absolute grid space-y-2 md:space-y-0 w-full justify-center ${!identity ? "h-full py-16 md:py-0" : " py-16 md:py-0"} items-center md:py-40`}>
         {/* HIDDEN COMPONENTS */}
         <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? "flex" : "hidden"}`}>
