@@ -4,16 +4,23 @@ import type { AppProps } from "next/app";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+// import { publicProvider } from "wagmi/providers/public";
+// import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import Layout from "../components/Layout";
+
+const aApiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY;
 
 const { chains, provider } = configureChains(
   [chain.goerli],
   [
     alchemyProvider({
-      apiKey: "URwrenD5PFhsQEhxLpo9xQHuL0bZgBhf",
+      apiKey: `${aApiKey}`,
     }),
+    // was causing errors so this was removed for now
     // publicProvider(),
+    
+    // add kevlar? ↓
+    // jsonRpcProvider()
   ]
 );
 console.log("provider", provider);

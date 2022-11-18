@@ -53,18 +53,17 @@ export default function IdentityStep({ }) {
   };
 
   const CreateDeterministicidentity = async (hash) => {
-    const identitynew = new Identity(hash);
-    setIdentity(identitynew);
-    const publicid = identitynew.generateCommitment();
+    const identityNew = new Identity(hash);
+    setIdentity(identityNew);
+    const publicid = identityNew.generateCommitment();
     let a = ethers.BigNumber.from(publicid).toString();
     console.log("identitycommitment", a);
-    window.localStorage.setItem("identitycommitment", identitynew);
+    window.localStorage.setItem("identitycommitment", identityNew);
   };
 
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-
 
   useEffect(function mount() {
     function onScroll() {
@@ -90,9 +89,8 @@ export default function IdentityStep({ }) {
       
       // Call Polygon contract here.
       
-      // Set state of gifs
-      
-      console.log("🎞 - G I F S - LOADED ! ✅");
+      // Set state of some content ↓
+      // console.log("❔ - S O M E T H I N G - LOADED ! ✅");
     }
   }, [walletAddress]);
 
