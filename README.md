@@ -6,6 +6,10 @@
 
 > 📄 PROVE IDENTITY - Use your Commitment ID to vote on on-chain proposals
 
+### ![Demo Gif](./assets/zk-demo-gif.gif)
+
+> Olde Demo Images -- New screenshots to be uploaded soon, see Gif or demo yourself (full experience requires browser injected Ethereum wallet)
+
 ### ![Demo Image 1](./assets/images/zkvote-demo-1.png)
 ### ![Demo Image 2](./assets/images/zkvote-demo-2.png)
 ### ![Demo Image 3](./assets/images/zkvote-demo-3.png)
@@ -24,7 +28,7 @@ git clone https://github.com/pryority/web3-youtube.git
 
 ### 🔁 Run this dApp
 ```
-yarn 
+yarn install
 yarn dev
 ```
 
