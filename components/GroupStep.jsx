@@ -12,11 +12,11 @@ export default function GroupStep({
 }) {
   const [loading, setLoading] = useState(false);
   const [Events, Setevents] = useState();
-  const [NewEventName, SetNewEventName] = useState(null);
-  const [NewEventDescription, SetNewEventDescription] = useState(null);
+  const [NewEventName, SetNewEventName] = useState("");
+  const [NewEventDescription, SetNewEventDescription] = useState("");
   const [EligibleVoters, SetEligibleVoters] = useState([""]);
-  const [Coordinator, SetCoordinator] = useState(null);
-  const [Fund, SetFund] = useState(null);
+  const [Coordinator, SetCoordinator] = useState("");
+  const [Fund, SetFund] = useState("");
   const [isShowingCreateProposalHelp, setIsShowingCreateProposalHelp] = useState(false);
   const contract = new ethers.Contract(
     process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,

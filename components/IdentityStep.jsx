@@ -72,7 +72,7 @@ export default function IdentityStep({ }) {
   const handleChange = (e) => {
     const value = e.target.value;
     setSecretString(value);
-    console.log({secretString});
+    // console.log({secretString});
   };
 
   const handleCreateID = async () => {
