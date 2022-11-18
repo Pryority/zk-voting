@@ -6,19 +6,17 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import Layout from "../components/Layout";
-import { useEffect } from "react";
-import Header from "../components/Header";
 
 const { chains, provider, webSocketProvider } = configureChains(
-  [chain.goerli],
+  [chain.goerli, chain.polygonMumbai, chain.hardhat],
   [
     alchemyProvider({
-      apiKey: "_gg7wSSi0KMBsdKnGVfHDueq6xMB9EkC",
+      apiKey: process.env.ALCHEMY_API_KEY,
     }),
     publicProvider(),
   ]
 );
-console.log("provider", chains);
+console.log("provider", provider);
 
 const { connectors } = getDefaultWallets({
   appName: "RainbowKit App",
@@ -29,7 +27,7 @@ const wagmiClient = createClient({
   autoConnect: true,
   connectors,
   provider,
-  webSocketProvider,
+  webSocketProvider
 });
 
 function MyApp({ Component, pageProps }: AppProps) {

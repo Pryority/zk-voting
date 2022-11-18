@@ -1,24 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Identity } from "@semaphore-protocol/identity";
 import { useSigner } from "wagmi";
 const { ethers } = require("ethers");
 import { ArrowPathRoundedSquareIcon, InformationCircleIcon } from '@heroicons/react/24/solid'
 import SemaphoreIntro from './SemaphoreIntro'
 import Generated from '../components/Generated'
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
 export default function IdentityStep({ }) {
   const { data: signer, isError, isLoading } = useSigner();
   const [identity, setIdentity] = useState("");
-  // const [TrapdoorCopied, SetTrapdoorCopied] = useState(false);
-  // const [NullifierCopied, SetNullifierCopied] = useState(false);
-  // const [CommitmentCopied, SetCommitmentCopied] = useState(false);
-  const [SecretString, SetSecretString] = useState();
+  const [SecretString, SetSecretString] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { address, isConnected } = useAccount();
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  });
+  const { disconnect } = useDisconnect();
+  const [walletAddress, setWalletAddress] = useState("");
+  const [canRender, setCanRender] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
-  console.log(identity)
+  // Actions
+  const checkIfWalletIsConnected = async () => {
+    if (address) {
+      console.log("🔑 - W A L L E T - FOUND ! ✅");
+      console.log({address});
+      /*
+       * Set the user's publicKey in state to be used later!
+       */
+      setWalletAddress(address);
+    } else {
+      alert("No browser wallet was found to connect to the blockchain 😡");
+    }
+  };
 
-  async function checkidentity() {
+  const checkidentity = async () => {
     const identityval = window.localStorage.getItem("identitycommitment");
     console.log("identityval", identityval);
     if (identityval) {
@@ -45,6 +64,24 @@ export default function IdentityStep({ }) {
   const toggle = () => {
     setIsOpen(!isOpen);
   }
+
+  useEffect(() => {
+    checkIfWalletIsConnected();
+    setCanRender(true);
+    console.log("🪟 - W I N D O W - LOADED ! ✅");
+  }, []);
+
+  useEffect(() => {
+    if (walletAddress) {
+      console.log("🎞 - G I F S - FETCHING ... 🔄");
+      
+      // Call Polygon contract here.
+      
+      // Set state of gifs
+      
+      console.log("🎞 - G I F S - LOADED ! ✅");
+    }
+  }, [walletAddress]);
 
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
