@@ -4,7 +4,7 @@ import { useSigner } from "wagmi";
 const { ethers } = require("ethers");
 import { ArrowPathRoundedSquareIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
 import SemaphoreIntro from "./SemaphoreIntro";
-import Generated from "../components/Generated";
+import CreatedIdInfo from "./id-creation/CreatedIdInfo";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { InjectedConnector } from "wagmi/connectors/injected";
 
@@ -25,7 +25,7 @@ export default function IdentityStep({ }) {
   // Actions
   const checkIfWalletIsConnected = async () => {
     if (address) {
-      console.log("🔑 - W A L L E T - FOUND !");
+      console.log("👛 - W A L L E T - FOUND !");
       console.log({address});
       /*
        * Set the user's publicKey in state to be used later!
@@ -55,7 +55,7 @@ export default function IdentityStep({ }) {
     // window.localStorage.setItem("identityCommitment", "⏰ AWAITING HASH");
     const identityNew = new Identity(hash);
     setIdentity(identityNew);
-    console.log("🔑 - I D E N T I T Y - CREATED ! ✅ -- ⚠️ DO NOT SHARE ⚠️", {identityNew});
+    console.log("🔑 - I D E N T I T Y - CREATED ! ✅ -- SHARE WITH OTHERS", {identityNew});
     console.log("🔑 - T R A P D O O R - GENERATED ! ✅ -- ⚠️ DO NOT SHARE ⚠️", identityNew._trapdoor);
     console.log("🔑 - N U L L I F I E R - GENERATED ! ✅ -- ⚠️ DO NOT SHARE ⚠️", identityNew._nullifier);
     const publicId = identityNew.generateCommitment();
@@ -100,7 +100,7 @@ export default function IdentityStep({ }) {
   useEffect(() => {
     checkIfWalletIsConnected();
     // setCanRender(true);
-    console.log("🪟 - W I N D O W - LOADED ! ✅");
+    console.log("🪟 - W I N D O W - LOADED !");
   }, []);
 
   useEffect(() => {
@@ -114,7 +114,7 @@ export default function IdentityStep({ }) {
 
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center overflow-scroll md:overflow-hidden">
-      <div className="absolute grid md:grid-cols-2 space-y-2 md:space-y-0 w-full justify-center min-h-screen items-center py-40">
+      <div className="absolute grid md:grid-cols-2 space-y-2 md:space-y-0 w-full justify-center min-h-screen items-center py-16 md:py-24 lg:py-40">
         <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? "flex" : "hidden"}`}>
           <SemaphoreIntro toggle={toggle} />
         </div>
@@ -164,7 +164,7 @@ export default function IdentityStep({ }) {
           </div>
         </div>
         <div className="md:p-8">
-          <Generated identity={identity} />
+          <CreatedIdInfo identity={identity} />
         </div>
       </div>
     </div>

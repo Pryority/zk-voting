@@ -45,7 +45,7 @@ export default function ProofStep({
     );
 
     console.log(start);
-    console.log('CONTRACT', contract);
+    console.log("CONTRACT", contract);
     return start.map((e) => ({
       groupId: e.args[0],
       time: e.args[1],
@@ -122,14 +122,14 @@ export default function ProofStep({
     const group = new Group();
     group.addMembers(mem[0].members);
     let id = ethers.BigNumber.from(eve[0].groupId).toString();
-    console.log('VALUE??!', ethers.utils.parseBytes32String(ethers.utils.formatBytes32String(eve[0].groupId)))
+    console.log("VALUE??!", ethers.utils.parseBytes32String(ethers.utils.formatBytes32String(eve[0].groupId)));
     console.log(
       "Keccak256 of vote",
       "b[0]",
       b[0],
       keccak256(["address"], [b[0]])
     );
-    console.log('ID COMMITMENT', identitycommitment)
+    console.log("ID COMMITMENT", identitycommitment);
     const fullProof = await generateProof(
       identitycommitment,
       group,
@@ -220,7 +220,7 @@ export default function ProofStep({
                         ethers.BigNumber.from(eve[0].groupId).toString().slice(-3)}
                     </h3>
                     <h2 className="text-sm">
-                      Created By: {contract.signer._address.substring(0, 5) + '...' + contract.signer._address.substring(contract.signer._address.length, contract.signer._address.length - 5)}
+                      Created By: {contract.signer._address.substring(0, 5) + "..." + contract.signer._address.substring(contract.signer._address.length, contract.signer._address.length - 5)}
                     </h2>
                   </div>
                 </div>
@@ -236,7 +236,7 @@ export default function ProofStep({
                         className='grid md:grid-cols-2 justify-center items-center w-full'>
                         <div label={val.IndividualGrantee}>
                           <p className="text-lg" key={index}>
-                            <span className="uppercase p-1 px-2 tracking-tighter font-bold text-sky-800 rounded-lg bg-blue-300 border text-sm">You</span> ({val.IndividualGrantee.substring(0, 5) + '...' + val.IndividualGrantee.substring(val.IndividualGrantee, val.IndividualGrantee.length - 5)}):{" "}
+                            <span className="uppercase p-1 px-2 tracking-tighter font-bold text-sky-800 rounded-lg bg-blue-300 border text-sm">You</span> ({val.IndividualGrantee.substring(0, 5) + "..." + val.IndividualGrantee.substring(val.IndividualGrantee, val.IndividualGrantee.length - 5)}):{" "}
                           </p>
                         </div>
                         {/* VOTE STEPPER */}
@@ -245,7 +245,7 @@ export default function ProofStep({
                           <input
                             className="w-[100px] border rounded p-1"
                             placeholder={Position[index] ? Position[index] * Position[index] : 0}
-                            type={'number'}
+                            type={"number"}
                             value={Position[index]}
                             onChange={(e) =>
                               updatePosition(index, e.target.value)
@@ -335,7 +335,7 @@ export default function ProofStep({
               <button
                 className="px-4 w-full bg-red-600  text-white border border-[#1e1e1e]/50 hover:bg-red-500 transition ease-in-and-out duration-100 hover:text-zinc-800 rounded-md"
                 onClick={async () => {
-                  await contract.disperse(ethers.BigNumber.from(eve[0].groupId).toString())
+                  await contract.disperse(ethers.BigNumber.from(eve[0].groupId).toString());
                 }}
               >
                 Disperse

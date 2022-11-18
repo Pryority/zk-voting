@@ -2,7 +2,7 @@ import { DocumentDuplicateIcon } from "@heroicons/react/24/solid";
 import React, { useState } from "react";
 import copy from "copy-to-clipboard";
 
-export default function Generated({ identity }) {
+export default function CreatedIdInfo({ identity }) {
   const [loading, setLoading] = useState(false);
   const [TrapdoorCopied, SetTrapdoorCopied] = useState(false);
   const [NullifierCopied, SetNullifierCopied] = useState(false);
@@ -16,6 +16,7 @@ export default function Generated({ identity }) {
     SetTrapdoorCopied(false);
     SetCommitmentCopied(false);
   };
+
   const getSetTrapdoor = () => {
     const trapdoor = identity.getTrapdoor().toString();
     copyToClipboard(trapdoor);
@@ -24,6 +25,7 @@ export default function Generated({ identity }) {
     SetCommitmentCopied(false);
     SetNullifierCopied(false);
   };
+
   const getSetCommitment = () => {
     const idHash = identity.generateCommitment().toString();
     copyToClipboard(idHash);
@@ -41,9 +43,10 @@ export default function Generated({ identity }) {
     <div>
       {identity ? (
         <div className="border shadow p-4 rounded-xl bg-[#fcffff] h-full">
-          <div className="mb-3">
-            <p className="font-bold text-base">
-                Nullifier - Do Not Share ⚠️
+          {/* NULLIFIER */}
+          <div className="flex flex-col space-y-2 py-2">
+            <p className="text-base font-light">
+              Nullifier - <span className="text-red-600 font-medium">Do Not Share ⚠️</span>
             </p>
             <div className='flex items-center w-full justify-center space-x-4'>
               <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
@@ -53,7 +56,7 @@ export default function Generated({ identity }) {
               </div>
               <div
                 onClick={getSetNullifier}
-                className={NullifierCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}
+                className={`cursor-pointer transition-all ease-in-out duration-200 ${NullifierCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
                 aria-label="Copy Trapdoor"
               >
                 <div className={`relative hover:scale-110 ${NullifierCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
@@ -64,9 +67,10 @@ export default function Generated({ identity }) {
             </div>
           </div>
 
-          <div className="mb-3">
-            <p className="font-bold text-base">
-                            Trapdoor - Do Not Share ⚠️
+          {/* TRAPDOOR */}
+          <div className="flex flex-col space-y-2 py-2">
+            <p className="text-base font-light">
+              Trapdoor - <span className="text-red-600 font-medium">Do Not Share ⚠️</span>
             </p>
             <div className='flex items-center w-full justify-center space-x-4'>
               <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
@@ -79,10 +83,10 @@ export default function Generated({ identity }) {
               </div>
               <div
                 onClick={getSetTrapdoor}
-                className={TrapdoorCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}
+                className={`cursor-pointer transition-all ease-in-out duration-200 ${TrapdoorCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
                 aria-label="Copy Commitment"
               >
-                <div className={`relative hover:scale-110 ${TrapdoorCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
+                <div className={`relative hover:scale-110 transition-all ease-in-out duration-200 ${TrapdoorCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
                 >
                   <DocumentDuplicateIcon className='w-16 h-16 text-white' />
                 </div>
@@ -90,9 +94,10 @@ export default function Generated({ identity }) {
             </div>
           </div>
 
-          <div>
-            <p className="font-bold text-base">
-                            Commitment - Your Shareable ID ✅
+          {/* COMMIT ID HASH */}
+          <div className="flex flex-col space-y-2 py-2">
+            <p className="text-base font-light">
+              ID Commit Hash - <span className="text-green-600 font-medium">Share with others!</span>
             </p>
             <div className='flex items-center w-full justify-center space-x-4'>
               <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
@@ -102,7 +107,7 @@ export default function Generated({ identity }) {
               </div>
               <div
                 onClick={getSetCommitment}
-                className={CommitmentCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}
+                className={`cursor-pointer transition-all ease-in-out duration-200 ${CommitmentCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}
                 aria-label="Copy Commitment"
               >
                 <div className={`relative hover:scale-110 ${CommitmentCopied ? "bg-green-600 hover:bg-green-600 copy-btn" : "bg-blue-500 hover:bg-blue-600 copy-btn"}`}

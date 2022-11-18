@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { chain, configureChains, createClient, useProvider, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 // import { publicProvider } from "wagmi/providers/public";
 // import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
@@ -23,7 +23,6 @@ const { chains, provider } = configureChains(
     // jsonRpcProvider()
   ]
 );
-console.log("provider", provider);
 
 const { connectors } = getDefaultWallets({
   appName: "RainbowKit App",
@@ -35,6 +34,8 @@ const wagmiClient = createClient({
   connectors,
   provider
 });
+
+console.log("🌐 - P R O V I D E R - CURRENT !", wagmiClient.provider);
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
