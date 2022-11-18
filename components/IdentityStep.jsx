@@ -11,7 +11,7 @@ import { InjectedConnector } from "wagmi/connectors/injected";
 export default function IdentityStep({ }) {
   const { data: signer, isError, isLoading } = useSigner();
   const [identity, setIdentity] = useState("");
-  const [SecretString, SetSecretString] = useState("");
+  const [secretString, setSecretString] = useState("");
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { address, isConnected } = useAccount();
@@ -20,8 +20,7 @@ export default function IdentityStep({ }) {
   });
   const { disconnect } = useDisconnect();
   const [walletAddress, setWalletAddress] = useState("");
-  const [canRender, setCanRender] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  // const [canRender, setCanRender] = useState(false);
 
   // Actions
   const checkIfWalletIsConnected = async () => {
@@ -65,6 +64,12 @@ export default function IdentityStep({ }) {
     setIsOpen(!isOpen);
   };
 
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSecretString(value);
+    console.log({secretString});
+  };
+
   useEffect(function mount() {
     function onScroll() {
       console.log("scroll!");
@@ -79,7 +84,7 @@ export default function IdentityStep({ }) {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-    setCanRender(true);
+    // setCanRender(true);
     console.log("🪟 - W I N D O W - LOADED ! ✅");
   }, []);
 
@@ -121,20 +126,20 @@ export default function IdentityStep({ }) {
               </div>
             </div>
             <input
-              className={`mb-5 p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${SecretString ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}`}
+              className={`mb-5 p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${secretString ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}`}
               placeholder="Enter a secret message to generate Identity "
-              value={SecretString}
-              onChange={(e) => SetSecretString(e.target.value)}
+              value={secretString}
+              onChange={handleChange}
             />
             <div className="flex flex-col items-center justify-center w-full space-y-1">
               <button
-                className={`w-full ${SecretString ? "bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 transition ease-in-out duration-200 text-white cursor-pointer" : "bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed"}`}
-                disabled={!SecretString}
+                className={`w-full ${secretString ? "bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 transition ease-in-out duration-200 text-white cursor-pointer" : "bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed"}`}
+                disabled={!secretString}
                 onClick={async () => {
                   setLoading(true);
-                  const hash = await signer.signMessage(SecretString);
+                  const hash = await signer.signMessage(secretString);
                   CreateDeterministicidentity(hash);
-                  SetSecretString("");
+                  setSecretString("");
                   setLoading(false);
                 }}
               >
