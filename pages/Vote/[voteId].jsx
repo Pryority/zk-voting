@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import ProofStep from "../../components/ProofStep";
-import { useSigner } from "wagmi";
+import { useState, useEffect } from "react";
+import { useNEXT_PUBLIC_CONTRACT_ADDRESS, useSigner } from "wagmi";
 import { useRouter } from "next/router";
-import abi from "../../helpers/ZkVote.json";
 import { Identity } from "@semaphore-protocol/identity";
 import { useCallback } from "react";
 import { useMemo } from "react";
-const { ethers } = require("ethers");
+import ethers from "ethers";
+import ProofStep from "../../components/ProofStep";
+import abi from "../../helpers/ZkVote.json";
 
 export default function Vote() {
   const { data: signer, isError, isLoading } = useSigner();
@@ -15,12 +15,8 @@ export default function Vote() {
   const router = useRouter();
   const { voteId } = router.query;
 
-  const provider = useMemo(() => new ethers.providers.JsonRpcProvider(
-    process.env.NEXT_PUBLIC_GOERLI_API
-  ), []);
+  const NEXT_PUBLIC_CONTRACT_ADDRESS = useNEXT_PUBLIC_CONTRACT_ADDRESS();
 
-  console.log("provider", provider);
-  // console.log("signer", signer);
   const contract = useMemo(
     () =>
       new ethers.Contract(
@@ -31,15 +27,15 @@ export default function Vote() {
     [signer]
   );
 
-  const readcontract = useMemo(
-    () =>
-      new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-        abi.abi,
-        provider
-      ),
-    [signer]
-  );
+  // const readcontract = useMemo(
+  //   () =>
+  //     new ethers.Contract(
+  //       process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+  //       abi.abi,
+  //       NEXT_PUBLIC_CONTRACT_ADDRESS
+  //     ),
+  //   [signer]
+  // );
 
   const getEvents = useCallback(async () => {
     // console.log("voteid", voteId);

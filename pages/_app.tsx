@@ -2,18 +2,18 @@ import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
 import type { AppProps } from "next/app";
 import { RainbowKitProvider, getDefaultWallets } from "@rainbow-me/rainbowkit";
-import { chain, configureChains, createStorage, createClient, WagmiConfig } from "wagmi";
+import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import Layout from "../components/Layout";
 
 const { chains, provider } = configureChains(
-  [chain.goerli, chain.polygonMumbai, chain.hardhat],
+  [chain.goerli],
   [
     alchemyProvider({
-      apiKey: process.env.ALCHEMY_API_KEY,
+      apiKey: "URwrenD5PFhsQEhxLpo9xQHuL0bZgBhf",
     }),
-    publicProvider(),
+    // publicProvider(),
   ]
 );
 console.log("provider", provider);

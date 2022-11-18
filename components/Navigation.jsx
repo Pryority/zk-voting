@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 
 export default function Navigation() {
   const menus = [
-    { tabName: "CREATE PROPOSAL", pageName: "/create-proposal" },
-    { tabName: "ACTIVE PROPOSALS", pageName: "/proposals" },
+    { tabName: "PROPOSE", pageName: "/create-proposal" },
     { tabName: "VOTE", pageName: "/SelectId" },
     { tabName: "IDENTITY", pageName: "/" },
   ];

@@ -3,7 +3,7 @@ import abi from "../../helpers/ZkVote.json";
 import { useState, useEffect } from "react";
 import { Identity } from "@semaphore-protocol/identity";
 import Link from "next/link";
-import { useSigner } from "wagmi";
+import { useNEXT_PUBLIC_CONTRACT_ADDRESS, useSigner } from "wagmi";
 import TextArea from "antd/lib/input/TextArea";
 const ethers = require("ethers");
 
@@ -14,20 +14,22 @@ export default function Activeproposals() {
   const [_identity, _setidentity] = useState();
   const [loading, setLoading] = useState(false);
   async function getEvents() {
-    const provider = new ethers.providers.JsonRpcProvider(
-      process.env.NEXT_PUBLIC_GOERLI_API
-    );
     const contract = new ethers.Contract(
       process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
       abi.abi,
-      provider
+      useNEXT_PUBLIC_CONTRACT_ADDRESS
     );
-    const identitycommitment =
-      window.localStorage.getItem("identitycommitment");
-    if (identitycommitment) {
-      const identity = new Identity(identitycommitment);
-      _setidentity(identity);
-    }
+
+    const getIdentityCommitment = () => {
+      const identityCommitment =
+      window.localStorage.getItem("identityCommitment");
+      console.log("IDENTITY COMMITMENT", identityCommitment);
+      if (identityCommitment) {
+        const identity = new Identity(identityCommitment);
+        _setidentity(identity);
+        console.log("IDENTITY", identity);
+      }
+    };
 
     const events = await contract.queryFilter(contract.filters.NewProposal());
     const members = await contract.queryFilter(contract.filters.MemberAdded());
@@ -59,7 +61,7 @@ export default function Activeproposals() {
   if (!Events) {
     return (
       <div className="flex w-screen h-5/6 justify-center items-center">
-        <h1>{'LOAAAADING (this needs a spinner)'}</h1>
+        <h1>{"LOAAAADING (this needs a spinner)"}</h1>
       </div>
     );
   }
@@ -113,12 +115,12 @@ export default function Activeproposals() {
                     <span className="tracking-tighter">ID:</span> {id.substring(0, 18)}...
                   </p>
                   <div className="text-sm flex space-x-2 items-center">
-                    <p className={`text-zinc-600 tracking-tighter`}>Status:</p>
-                    <div className={`flex space-x-1 items-center ${status === 'Live' ? 'animate-pulse' : ''}`}>
+                    <p className={"text-zinc-600 tracking-tighter"}>Status:</p>
+                    <div className={`flex space-x-1 items-center ${status === "Live" ? "animate-pulse" : ""}`}>
                       <p className="font-bold">
                         {status}
                       </p>
-                      {status === 'Live' && (<div className="w-2 h-2 rounded-full bg-red-500" />)}
+                      {status === "Live" && (<div className="w-2 h-2 rounded-full bg-red-500" />)}
                     </div>
                   </div>
                   <div className="flex w-full h-[100px] rounded p-4 border overflow-auto">
@@ -148,7 +150,7 @@ export default function Activeproposals() {
                           const contractwithsigner = new ethers.Contract(
                             process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
                             abi.abi,
-                            signer
+                            signer,
                           );
                           let arr = [];
                           console.log("newVoter", NewVoter);

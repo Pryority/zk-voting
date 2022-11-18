@@ -1,14 +1,13 @@
 import React from "react";
-import { useState, useCallBack, useEffect } from "react";
+import { useState } from "react";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import abi from "../helpers/ZkVote.json";
-import { ArrowPathRoundedSquareIcon, InformationCircleIcon } from '@heroicons/react/24/solid'
-import HelpCreateProposal from './HelpCreateProposal'
+import { ArrowPathRoundedSquareIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
+import HelpCreateProposal from "./HelpCreateProposal";
 
 const { ethers } = require("ethers");
 
 export default function GroupStep({
-  mainnetprovider,
   signer,
 }) {
   const [loading, setLoading] = useState(false);
@@ -47,7 +46,7 @@ export default function GroupStep({
 
   const toggle = () => {
     setIsShowingCreateProposalHelp(!isShowingCreateProposalHelp);
-  }
+  };
 
   const CreateProposal = async () => {
     let proposals = [...EligibleVoters];
@@ -78,10 +77,10 @@ export default function GroupStep({
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center">
       <div className="absolute flex flex-col w-full justify-center items-center h-screen md:pt-0">
-        <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isShowingCreateProposalHelp ? 'flex' : 'hidden'}`}>
+        <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isShowingCreateProposalHelp ? "flex" : "hidden"}`}>
           <HelpCreateProposal toggle={toggle} />
         </div>
-        {loading && <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isShowingCreateProposalHelp ? 'flex' : 'hidden'}`}>
+        {loading && <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isShowingCreateProposalHelp ? "flex" : "hidden"}`}>
           <ArrowPathRoundedSquareIcon className="h-8 w-8 text-[#fcffff]" />
         </div>}
         <div
@@ -103,13 +102,13 @@ export default function GroupStep({
             </div>
           </div>
           <input
-            className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${NewEventName ? 'focus:ring-lime-500 border-lime-300/50' : 'focus:pink-500'}  placeholder:text-sm`}
+            className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${NewEventName ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}  placeholder:text-sm`}
             placeholder="Enter the proposal name"
             value={NewEventName}
             onChange={(e) => SetNewEventName(e.target.value)}
           />
           <input
-            className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${NewEventDescription ? 'focus:ring-lime-500 border-lime-300/50' : 'focus:pink-500'}  placeholder:text-sm`}
+            className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${NewEventDescription ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}  placeholder:text-sm`}
             placeholder="Enter Description of Voting "
             value={NewEventDescription}
             onChange={(e) => SetNewEventDescription(e.target.value)}
@@ -121,7 +120,7 @@ export default function GroupStep({
                   placeholder="Enter address"
                   value={voter}
                   onChange={(e) => updateEligibleVoters(e.target.value, index)}
-                  className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${voter ? 'focus:ring-lime-500 border-lime-300/50' : 'focus:pink-500'}  placeholder:text-sm`}
+                  className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${voter ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}  placeholder:text-sm`}
                 />
                 <div className="flex space-x-2 justify-center p-4">
                   {index >= 0 && (
@@ -152,9 +151,8 @@ export default function GroupStep({
             <input
               placeholder="Coordinator"
               value={Coordinator}
-              ensProvider={mainnetprovider}
               onChange={(e) => SetCoordinator(e.target.value)}
-              className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${Coordinator ? 'focus:ring-lime-500 border-lime-300/50' : 'focus:pink-500'}  placeholder:text-sm`}
+              className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${Coordinator ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}  placeholder:text-sm`}
             />
           </div>
           <div className="">
@@ -162,11 +160,11 @@ export default function GroupStep({
               placeholder="Ether to distribute"
               value={Fund}
               onChange={e => SetFund(e.target.value)}
-              className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${Fund ? 'focus:ring-lime-500 border-lime-300/50' : 'focus:pink-500'}  placeholder:text-sm`}
+              className={`p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${Fund ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}  placeholder:text-sm`}
             />
           </div>
           <button
-            className={`w-full ${NewEventName && NewEventDescription && Fund && EligibleVoters && Coordinator ? 'bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 hover:animate-none transition ease-in-out duration-200 text-white cursor-pointer animate-pulse' : 'bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed'}`}
+            className={`w-full ${NewEventName && NewEventDescription && Fund && EligibleVoters && Coordinator ? "bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 hover:animate-none transition ease-in-out duration-200 text-white cursor-pointer animate-pulse" : "bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed"}`}
             onClick={async () => {
               // setLoading(true);
               await CreateProposal();

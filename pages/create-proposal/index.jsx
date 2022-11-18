@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSigner } from "wagmi";
+import { useNEXT_PUBLIC_CONTRACT_ADDRESS, useSigner } from "wagmi";
 import abi from "../../helpers/ZkVote.json";
 import GroupStep from "../../components/GroupStep";
 import { Identity } from "@semaphore-protocol/identity";
@@ -8,27 +8,29 @@ const { ethers } = require("ethers");
 export default function NewVote({ }) {
   const [_identity, _setidentity] = useState();
   const [Contract, SetContract] = useState();
-  const [Mainnetprovider, SetMainnetprovider] = useState();
   const { data: signer, isError, isLoading } = useSigner();
+  const [NEXT_PUBLIC_CONTRACT_ADDRESS] = useNEXT_PUBLIC_CONTRACT_ADDRESS();
+  
+  const getidentity = async () => {
+    const identityCommitment =
+      window.localStorage.getItem("identityCommitment");
+    if (identityCommitment) {
+      const identity = new Identity(identityCommitment);
+      _setidentity(identity);
+    }
+    const contract = new ethers.Contract(
+      process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
+      abi.abi,
+      signer,
+      NEXT_PUBLIC_CONTRACT_ADDRESS
+    );
+    // const mainnetNEXT_PUBLIC_CONTRACT_ADDRESS = new ethers.NEXT_PUBLIC_CONTRACT_ADDRESSs.JsonRpcNEXT_PUBLIC_CONTRACT_ADDRESS(
+    //   "https://eth-mainnet.g.alchemy.com/v2/gDhsVUBEe61W2Q0w40A7Jwr3ZVyJ_Mvo"
+    // );
+    SetContract(contract);
+  };
+
   useEffect(() => {
-    const getidentity = async () => {
-      const identitycommitment =
-        window.localStorage.getItem("identitycommitment");
-      if (identitycommitment) {
-        const identity = new Identity(identitycommitment);
-        _setidentity(identity);
-      }
-      const contract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
-        abi.abi,
-        signer
-      );
-      const mainnetprovider = new ethers.providers.JsonRpcProvider(
-        "https://eth-mainnet.g.alchemy.com/v2/gDhsVUBEe61W2Q0w40A7Jwr3ZVyJ_Mvo"
-      );
-      SetMainnetprovider(mainnetprovider);
-      SetContract(contract);
-    };
     getidentity();
   }, []);
 
@@ -44,12 +46,11 @@ export default function NewVote({ }) {
 
   return (
     <div>
-      {signer && Contract && _identity && Mainnetprovider && (
+      {signer && Contract && _identity && (
         <GroupStep
           contract={Contract}
           signer={signer}
-          mainnetprovider={Mainnetprovider}
-          identitycommitment={_identity}
+          identityCommitment={_identity}
         />
       )}
     </div>
