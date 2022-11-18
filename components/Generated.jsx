@@ -9,19 +9,25 @@ export default function Generated({ identity }) {
   const [CommitmentCopied, SetCommitmentCopied] = useState(false);
 
   const getSetNullifier = () => {
+    const nullifier = identity.getNullifier().toString();
+    copyToClipboard(nullifier);
+    console.log("🔐 - N U L L I F I E R - COPIED !", nullifier);
     SetNullifierCopied(true);
-    copyToClipboard(identity.getNullifier().toString());
     SetTrapdoorCopied(false);
     SetCommitmentCopied(false);
   };
   const getSetTrapdoor = () => {
-    copyToClipboard(identity.getTrapdoor().toString());
+    const trapdoor = identity.getTrapdoor().toString();
+    copyToClipboard(trapdoor);
+    console.log("🔐 - T R A P D O O R - COPIED !", trapdoor);
     SetTrapdoorCopied(true);
     SetCommitmentCopied(false);
     SetNullifierCopied(false);
   };
   const getSetCommitment = () => {
-    copyToClipboard(identity.generateCommitment().toString());
+    const idHash = identity.generateCommitment().toString();
+    copyToClipboard(idHash);
+    console.log("🔐 - I D  C O M M I T  H A S H - COPIED !", idHash);
     SetCommitmentCopied(true);
     SetTrapdoorCopied(false);
     SetNullifierCopied(false);
@@ -40,9 +46,9 @@ export default function Generated({ identity }) {
                 Nullifier - Do Not Share ⚠️
             </p>
             <div className='flex items-center w-full justify-center space-x-4'>
-              <div className='h-32 w-32 tracking-widest leading-[14px] text-[12px] bg-lime-200 justify-center items-center flex relative rounded-lg'>
-                <div className='h-28 w-28 overflow-clip tracking-[2px] leading-[14px] text-[12px] font-bold justify-center items-center flex'>
-                  <p className='break-all text-center'>{identity ? identity.getNullifier().toString() : ""}{" "}</p>
+              <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
+                <div className='h-fit overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex'>
+                  <p className='break-all text-center'>{identity ? identity.getNullifier().toString() : ""}{""}</p>
                 </div>
               </div>
               <div
@@ -63,9 +69,12 @@ export default function Generated({ identity }) {
                             Trapdoor - Do Not Share ⚠️
             </p>
             <div className='flex items-center w-full justify-center space-x-4'>
-              <div className='h-32 w-32 tracking-widest leading-[14px] text-[12px] bg-lime-200 justify-center items-center flex relative rounded-lg'>
-                <div className='h-24 w-24 overflow-clip tracking-[2px] leading-[14px] text-[12px] font-bold justify-center items-center flex'>
-                  <p className='break-all text-center'> {identity ? identity.getTrapdoor().toString() : ""}{" "}</p>
+              <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
+                <div className='h-full w-full overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex relative p-1'>
+                  {/* <p className='break-all items-center text-center absolute flex w-full h-full'>{
+                    identity ? identity.getTrapdoor().toString() : ""
+                  }</p> */}
+                  <p className='break-all items-center text-center absolute flex w-full h-full'>{identity.getTrapdoor().toString()}</p>                     
                 </div>
               </div>
               <div
@@ -86,9 +95,8 @@ export default function Generated({ identity }) {
                             Commitment - Your Shareable ID ✅
             </p>
             <div className='flex items-center w-full justify-center space-x-4'>
-
-              <div className='h-32 w-32 tracking-widest leading-[14px] text-[12px] bg-lime-200 justify-center items-center flex relative rounded-lg'>
-                <div className='h-24 w-24 overflow-clip tracking-[2px] leading-[14px] text-[12px] font-bold justify-center items-center flex'>
+              <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
+                <div className='h-fit overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex'>
                   <p className='break-all text-center'> {identity ? identity.generateCommitment().toString() : ""}{" "}</p>
                 </div>
               </div>
