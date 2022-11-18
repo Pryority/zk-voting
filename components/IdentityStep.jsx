@@ -114,13 +114,16 @@ export default function IdentityStep({ }) {
 
   return (
     <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center overflow-scroll">
-      <div className="absolute grid md:grid-cols-2 space-y-2 md:space-y-0 w-full justify-center min-h-screen items-center py-16 md:py-24 lg:py-40">
+      <div className={`absolute grid md:grid-cols-2 space-y-2 md:space-y-0 w-full justify-center ${!identity ? "h-full py-16 md:py-0" : "min-h-screen py-16 md:py-0"} items-center md:py-24 lg:py-40`}>
+        {/* HIDDEN COMPONENTS */}
         <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? "flex" : "hidden"}`}>
           <SemaphoreIntro toggle={toggle} />
         </div>
+        {/* LOADING COMPONENTS */}
         {loading && <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? "flex" : "hidden"}`}>
           <ArrowPathRoundedSquareIcon className="h-8 w-8 text-[#fcffff]" />
         </div>}
+        {/* LOAD COMPONENTS */}
         <div className="md:p-8">
           <div className="p-4 rounded-xl bg-zinc-50 flex flex-col justify-center items-center w-full space-y-4 border shadow">
             <div className="flex justify-between w-full">
