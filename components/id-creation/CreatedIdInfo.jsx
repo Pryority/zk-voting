@@ -42,16 +42,17 @@ export default function CreatedIdInfo({ identity }) {
   return (
     <div className="flex w-full justify-center items-center">
       {identity ? (
-        <div className="border shadow w-fit px-2 rounded-xl bg-[#fcffff] h-full">
+        <div className="border shadow w-fit grid sm:grid-cols-1 md:grid-cols-9 p-2 rounded-xl bg-[#fcffff] h-full">
           {/* NULLIFIER */}
-          <div className="flex flex-col space-y-2 py-2">
-            <div className="flex w-full justify-center">
-              <p className="text-base font-light">
+          <div className="flex flex-col space-y-2 py-2 col-span-3 justify-between">
+            <div className="flex w-full justify-center md:justify-start">
+              <p className="md:p-2 text-base font-light flex-wrap flex">
               Nullifier - <span className="text-red-600 font-medium">Do Not Share ⚠️</span>
               </p>
             </div>
-            <div className='flex items-center w-full justify-center space-x-4'>
-              <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
+            <div className="hidden md:flex md:h-2"/>
+            <div className='flex space-x-2 md:space-x-1 md:flex-wrap items-center justify-center'>
+              <div className='m-1 h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
                 <div className='h-fit overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex'>
                   <p className='break-all text-center'>{identity ? identity.getNullifier().toString() : ""}{""}</p>
                 </div>
@@ -70,14 +71,15 @@ export default function CreatedIdInfo({ identity }) {
           </div>
 
           {/* TRAPDOOR */}
-          <div className="flex flex-col space-y-2 py-2">
-            <div className="flex w-full justify-center">
-              <p className="text-base font-light">
+          <div className="flex flex-col space-y-2 py-2 col-span-3 justify-between">
+            <div className="flex w-full justify-center md:justify-start">
+              <p className="md:p-2 text-base font-light flex-wrap flex">
               Trapdoor - <span className="text-red-600 font-medium">Do Not Share ⚠️</span>
               </p>
             </div>
-            <div className='flex items-center w-full justify-center space-x-4'>
-              <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
+            <div className="hidden md:flex md:h-2"/>
+            <div className='flex space-x-2 md:space-x-1 md:flex-wrap items-center justify-center'>
+              <div className='m-1 h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
                 <div className='h-full w-full overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex relative p-1'>
                   {/* <p className='break-all items-center text-center absolute flex w-full h-full'>{
                     identity ? identity.getTrapdoor().toString() : ""
@@ -99,14 +101,15 @@ export default function CreatedIdInfo({ identity }) {
           </div>
 
           {/* COMMIT ID HASH */}
-          <div className="flex flex-col space-y-2 py-2">
-            <div className="flex w-full justify-center">
-              <p className="text-base font-light">
+          <div className="flex flex-col space-y-2 py-2 col-span-3 justify-between">
+            <div className="flex w-full justify-center md:justify-start">
+              <p className="md:p-2 text-base font-light flex-wrap flex">
               ID Commit Hash - <span className="text-green-600 font-medium">Share with others!</span>
               </p>
             </div>
-            <div className='flex items-center w-full justify-center space-x-4'>
-              <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
+            <div className="hidden md:flex md:h-2"/>
+            <div className='flex space-x-2 md:space-x-1 md:flex-wrap items-center justify-center'>
+              <div className='m-1 h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
                 <div className='h-fit overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex'>
                   <p className='break-all text-center'> {identity ? identity.generateCommitment().toString() : ""}{" "}</p>
                 </div>
