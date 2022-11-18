@@ -40,14 +40,16 @@ export default function CreatedIdInfo({ identity }) {
   };
 
   return (
-    <div>
+    <div className="flex w-full justify-center items-center">
       {identity ? (
-        <div className="border shadow p-4 rounded-xl bg-[#fcffff] h-full">
+        <div className="border shadow w-fit px-2 rounded-xl bg-[#fcffff] h-full">
           {/* NULLIFIER */}
           <div className="flex flex-col space-y-2 py-2">
-            <p className="text-base font-light">
+            <div className="flex w-full justify-center">
+              <p className="text-base font-light">
               Nullifier - <span className="text-red-600 font-medium">Do Not Share ⚠️</span>
-            </p>
+              </p>
+            </div>
             <div className='flex items-center w-full justify-center space-x-4'>
               <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
                 <div className='h-fit overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex'>
@@ -69,9 +71,11 @@ export default function CreatedIdInfo({ identity }) {
 
           {/* TRAPDOOR */}
           <div className="flex flex-col space-y-2 py-2">
-            <p className="text-base font-light">
+            <div className="flex w-full justify-center">
+              <p className="text-base font-light">
               Trapdoor - <span className="text-red-600 font-medium">Do Not Share ⚠️</span>
-            </p>
+              </p>
+            </div>
             <div className='flex items-center w-full justify-center space-x-4'>
               <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
                 <div className='h-full w-full overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex relative p-1'>
@@ -96,9 +100,11 @@ export default function CreatedIdInfo({ identity }) {
 
           {/* COMMIT ID HASH */}
           <div className="flex flex-col space-y-2 py-2">
-            <p className="text-base font-light">
+            <div className="flex w-full justify-center">
+              <p className="text-base font-light">
               ID Commit Hash - <span className="text-green-600 font-medium">Share with others!</span>
-            </p>
+              </p>
+            </div>
             <div className='flex items-center w-full justify-center space-x-4'>
               <div className='h-28 w-28 tracking-widest leading-[14px] text-[12px] bg-stone-900 text-stone-50 justify-center items-center flex relative rounded-lg'>
                 <div className='h-fit overflow-clip tracking-[2px] leading-[15px] text-[12px] font-bold justify-center items-center flex'>

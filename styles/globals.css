@@ -10,7 +10,7 @@
     @apply flex flex-col min-h-screen justify-center items-center;
   }
   .copy-btn {
-    @apply h-32 w-32 justify-center items-center flex rounded-lg transition ease-in-out duration-100 overflow-clip;
+    @apply h-28 w-28 justify-center items-center flex rounded-lg transition ease-in-out duration-100 overflow-clip;
   }
 }
 
