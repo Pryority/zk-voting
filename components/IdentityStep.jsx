@@ -113,7 +113,7 @@ export default function IdentityStep({ }) {
   }, [walletAddress]);
 
   return (
-    <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center overflow-scroll md:overflow-hidden">
+    <div className="text-base md:text-lg leading-5 w-full relative min-h-screen justify-center items-center overflow-scroll">
       <div className="absolute grid md:grid-cols-2 space-y-2 md:space-y-0 w-full justify-center min-h-screen items-center py-16 md:py-24 lg:py-40">
         <div className={`absolute bg-black/60 items-center h-screen w-full z-50 ${isOpen ? "flex" : "hidden"}`}>
           <SemaphoreIntro toggle={toggle} />
@@ -138,8 +138,8 @@ export default function IdentityStep({ }) {
                 </div>
               </div>
             </div>
-            <input
-              className={`mb-5 p-1 w-full rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${secretString ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}`}
+            <textarea
+              className={`mb-5 p-2 w-full h-[30vh] justify-start items-start rounded border border-pink-300/50 focus:ring-[2px] focus:outline-none focus:ring-pink-500 ${secretString ? "focus:ring-lime-500 border-lime-300/50" : "focus:pink-500"}`}
               placeholder="Enter a secret message to generate Identity "
               value={secretString}
               onChange={handleChange}
