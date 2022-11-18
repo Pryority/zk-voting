@@ -1,5 +1,5 @@
 import React from "react";
-import Link from 'next/link'
+import Link from "next/link";
 import Navigation from "./Navigation";
 
 export default function Header() {
@@ -12,13 +12,13 @@ export default function Header() {
               className="flex text-xl md:text-3xl font-bold cursor-pointer"
               color={"#fff"}
               _before={{
-                content: '""',
+                content: "\"\"",
                 borderBottom: "2px solid #fff",
                 flex: "1",
                 margin: "auto 20px",
               }}
               _after={{
-                content: '""',
+                content: "\"\"",
                 borderBottom: "2px solid #fff",
                 flex: "1",
                 margin: "auto 20px",

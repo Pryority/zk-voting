@@ -52,12 +52,17 @@ export default function IdentityStep({ }) {
   };
 
   const CreateDeterministicidentity = async (hash) => {
+    // window.localStorage.setItem("identityCommitment", "⏰ AWAITING HASH");
     const identityNew = new Identity(hash);
     setIdentity(identityNew);
-    const publicid = identityNew.generateCommitment();
-    let a = ethers.BigNumber.from(publicid).toString();
-    console.log("identitycommitment", a);
-    window.localStorage.setItem("identitycommitment", identityNew);
+    console.log("🔑 - I D E N T I T Y - CREATED ! ✅ -- ⚠️ DO NOT SHARE ⚠️", identityNew);
+    console.log("🔑 - T R A P D O O R - GENERATED ! ✅ -- ⚠️ DO NOT SHARE ⚠️", identityNew._trapdoor);
+    console.log("🔑 - N U L L I F I E R - GENERATED ! ✅ -- ⚠️ DO NOT SHARE ⚠️", identityNew._nullifier);
+    const publicId = identityNew.generateCommitment();
+    let a = ethers.BigNumber.from(publicId).toString();
+    console.log("🆔 - I D  C O M M I T M E N T - GENERATED ! ✅", a);
+    window.localStorage.setItem("identityCommitment", identityNew);
+    console.log("💾 - L O C A L L Y  S T O R E D  I D  H A S H - SET ! ✅", window.localStorage.getItem("identityCommitment"));
   };
 
   const toggle = () => {
@@ -68,6 +73,16 @@ export default function IdentityStep({ }) {
     const value = e.target.value;
     setSecretString(value);
     console.log({secretString});
+  };
+
+  const handleCreateID = async () => {
+    setLoading(true);
+    // concatenates the connected wallet's signature with the secret string, then hashes it ↓
+    const hash = await signer.signMessage(secretString);
+    console.log("🔢 - H A S H - GENERATED ! ✅", hash);
+    CreateDeterministicidentity(hash);
+    setSecretString("");
+    setLoading(false);
   };
 
   useEffect(function mount() {
@@ -90,8 +105,6 @@ export default function IdentityStep({ }) {
 
   useEffect(() => {
     if (walletAddress) {
-      console.log("🎞 - G I F S - FETCHING ... 🔄");
-      
       // Call Polygon contract here.
       
       // Set state of some content ↓
@@ -135,13 +148,7 @@ export default function IdentityStep({ }) {
               <button
                 className={`w-full ${secretString ? "bg-green-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-green-600 transition ease-in-out duration-200 text-white cursor-pointer" : "bg-red-500 border rounded-sm px-2 py-1 text-sm md:text-md lg:text-lg hover:bg-red-600/90 transition ease-in-out duration-200 text-white cursor-not-allowed"}`}
                 disabled={!secretString}
-                onClick={async () => {
-                  setLoading(true);
-                  const hash = await signer.signMessage(secretString);
-                  CreateDeterministicidentity(hash);
-                  setSecretString("");
-                  setLoading(false);
-                }}
+                onClick={handleCreateID}
               >
                 Create Deterministic Identity
               </button>
